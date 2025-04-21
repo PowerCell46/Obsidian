@@ -1,0 +1,9 @@
+{
+  "accentColor": "#db000b",
+  "textFontFamily": "Consolas",
+  "interfaceFontFamily": "",
+  "monospaceFontFamily": "Cascadia Code",
+  "baseFontSizeAction": true,
+  "baseFontSize": 15,
+  "nativeMenus": false
+}

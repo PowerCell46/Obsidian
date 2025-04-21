@@ -1,0 +1,45 @@
+
+```sql
+CREATE OR REPLACE PROCEDURE p_transfer_money(
+	IN SENDER_ID INT,
+	IN RECEIVER_ID INT,
+	IN TRANSFER_AMOUNT FLOAT,
+	OUT STATUS VARCHAR
+)
+AS 
+$$	
+	DECLARE 
+		SENDER_BALANCE FLOAT;
+		RECEIVER_BALANCE FLOAT;
+		TEMP_VAL FLOAT;
+	BEGIN
+		SELECT amount INTO SENDER_BALANCE FROM bank where id = SENDER_ID;
+		
+		IF SENDER_BALANCE < TRANSFER_AMOUNT THEN STATUS := 'Insufficient sender balance.'; RETURN;
+		END IF;
+		
+		SELECT amount INTO RECEIVER_BALANCE FROM bank where id = RECEIVER_ID;
+		
+		UPDATE bank 
+		SET AMOUNT = AMOUNT - TRANSFER_AMOUNT
+		WHERE ID = SENDER_ID;
+		
+		UPDATE bank
+		SET AMOUNT = AMOUNT + TRANSFER_AMOUNT
+		WHERE ID = RECEIVER_ID;
+		
+		SELECT amount INTO temp_val FROM bank where id = SENDER_ID;
+		
+		IF SENDER_AMOUNT - transfer_amount <> temp_val THEN STATUS := 'Internal Error!'; ROLLBACK; RETURN;
+		
+		SELECT amount INTO temp_val FROM bank where id = RECEIVER_ID;
+		
+		IF RECEIVER_AMOUNT + transfer_amount <> temp_val THEN STATUS := 'Internal Error!'; ROLLBACK; RETURN;
+		
+		COMMIT;
+		STATUS := 'Successfull operation!';
+		RETURN;
+	END;
+$$
+LANGUAGE PLPGSQL;
+```
