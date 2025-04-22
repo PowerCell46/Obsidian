@@ -1,5 +1,7 @@
 # Single Linked List
 
+#### (1 -> 2 -> 3 -> 4 -> 5)
+
   ```cpp
 struct LinkedNode {  
     int number;  
@@ -517,6 +519,7 @@ LinkNode *deleteFromLinkedList(LinkNode *linkNode, const int &deleteIndex, const
 ## Check if Linked List is sorted
 
 ```cpp
+// Iterative
 bool isLinkedListSorted(LinkNode* linkNode) {    
     while (linkNode && linkNode->next) {    
         if (linkNode->number > linkNode->next->number)    
@@ -525,11 +528,22 @@ bool isLinkedListSorted(LinkNode* linkNode) {
     }  
     return true;  
 }
+
+// Recursive
+bool isLinkListSorted(LinkNode* linkNode) {  
+    if (linkNode->next) {  
+        if (linkNode->number > linkNode->next->number)  
+            return false;  
+        return isLinkListSorted(linkNode->next);  
+    }  
+    return true;  
+}
 ```
 
-## Remove duplicates from a sorted array
+## Remove duplicates from a sorted Link List
 
 ```cpp
+// Iterative
 void deleteDuplicatesLinkedList(LinkList* linkList) {    
 	if (!linkList || !linkList->next)    
 		return;    
@@ -544,9 +558,25 @@ void deleteDuplicatesLinkedList(LinkList* linkList) {
 			linkList = linkList->next;    
     }  
 }
+
+// Recursive
+LinkNode* removeDuplicatesFromLinkList(LinkNode* linkNode, LinkNode* first = nullptr) {
+    if (linkNode && linkNode->next) {
+        if (linkNode->number == linkNode->next->number) {
+            LinkNode* temp = linkNode->next->next;
+            delete linkNode->next;
+            linkNode->next = temp;
+
+            return removeDuplicatesFromLinkList(linkNode, first == nullptr ? linkNode : first);
+        }
+
+        return removeDuplicatesFromLinkList(linkNode->next, first == nullptr ? linkNode : first);
+    }
+    return first;
+}
 ```
 
-## Reverse Link List using extra array
+## Reverse Link List using an extra Array
 
 ```cpp
 int reverseList(LinkList* linkList, int*& arr, const int& elementsSize=0) {  
@@ -640,24 +670,25 @@ ___
 ## Reverse Link List using Recursion
 
 ```cpp
-LinkList* recursiveReverseLinkList(
-	LinkList* linkList, LinkList* previous=nullptr
-) {  
-    if (linkList) {  
-        LinkList* newHead = recursiveReverseLinkList(linkList->next, linkList);  
-        
-        linkList->next = previous;  
+LinkNode* recursiveReverseLinkList(LinkNode* linkNode, LinkNode* previous=nullptr) {
+    if (linkNode) {
+        LinkNode* newHead = recursiveReverseLinkList(linkNode->next, linkNode);
 
-		return newHead;  
-    }   
-     
-     return previous; // reference to the last element (new head)  
+        linkNode->next = previous;
+
+        return newHead;
+    }
+
+    return previous; // reference to the last element (new head)
 }
 ```
 
 ## Concatenate two Link Lists
 
+`[1, 2, 3] [2, 3, 5] => [1, 2, 3, 2, 3, 5]`
+
 ```cpp
+// Iterative
 LinkList* concatenateTwoLinkLists(LinkList* firstLinkList, LinkList* secondLinkList) {  
     LinkList* first = firstLinkList;  
   
@@ -668,11 +699,24 @@ LinkList* concatenateTwoLinkLists(LinkList* firstLinkList, LinkList* secondLinkL
   
     return first;  
 }
+
+// Recursive
+LinkNode* concatenateTwoLinkLists(LinkNode* first, LinkNode*second, LinkNode* head = nullptr) {
+    if (first) {
+        if (first->next)
+            return concatenateTwoLinkLists(first->next, second, head == nullptr ? first : head);
+
+        first->next = second;
+        return head;
+    }
+    return nullptr;
+}
 ```
 
 ## Merge two Link Lists
 
 ```cpp
+// Iterative
 LinkList *mergeLinkLists(LinkList *first, LinkList *second) {  
     if (!first)  
         return second;  
@@ -715,14 +759,76 @@ LinkList *mergeLinkLists(LinkList *first, LinkList *second) {
   
     return newHead;  
 }
+
+// Recursive
+LinkNode* mergeTwoLinkLists(LinkNode* first, LinkNode* second, LinkNode* newHead = nullptr, LinkNode* previous = nullptr) {
+    if (first && second) {
+        if (first->number < second->number) {
+            LinkNode* newElement = new LinkNode{first->number, nullptr};
+
+            if (previous)
+                previous->next = newElement;
+
+            return mergeTwoLinkLists(
+                first->next,
+                second,
+                newHead == nullptr ? newElement : newHead,
+                newElement
+            );
+
+        } else {
+            LinkNode* newElement = new LinkNode{second->number, nullptr};
+
+            if (previous)
+                previous->next = newElement;
+
+            return mergeTwoLinkLists(
+                first,
+                second->next,
+                newHead == nullptr ? newElement : newHead,
+                newElement
+            );
+        }
+
+    } else if (first) {
+        LinkNode* newElement = new LinkNode{first->number, nullptr};
+
+        if (previous)
+            previous->next = newElement;
+
+        return mergeTwoLinkLists(
+            first->next,
+            second,
+            newHead == nullptr ? newElement : newHead,
+            newElement
+        );
+
+    } else if (second) {
+        LinkNode* newElement = new LinkNode{second->number, nullptr};
+
+        if (previous)
+            previous->next = newElement;
+
+        return mergeTwoLinkLists(
+            first,
+            second->next,
+            newHead == nullptr ? newElement : newHead,
+            newElement
+        );
+    }
+
+    return newHead;
+}
 ```
 
 ___
 # Circular Linked List
+#### (1 -> 2 -> 3 -> 4 -> 5 -> 1)
 
-## Create, Display and Delete Circular Link List
+## Create and Delete Circular Link List
 
 ```cpp
+// Iterative
 LinkList* generateCircularLinkList(const int* array, const int& arraySize) {  
     LinkList* head = new LinkList{*array, nullptr};  
   
@@ -738,7 +844,20 @@ LinkList* generateCircularLinkList(const int* array, const int& arraySize) {
     
     return head;  
 }  
-  
+
+// Recursive
+LinkNode* generateCircularLinkedList(int* array, const int& arraySize, const int& currentIndex = 0, LinkNode* first = nullptr) {
+    if (currentIndex < arraySize) {
+        LinkNode* current = new LinkNode{*(array + currentIndex), nullptr};
+
+        LinkNode* next = generateCircularLinkedList(array, arraySize, currentIndex + 1, first == nullptr ? current : first);
+        current->next = next;
+        return current;
+    }
+    return first;
+}
+
+// Iterative
 void deleteCircularLinkList(LinkList* linkList, LinkList* head = nullptr) {  
     if (linkList != head && linkList != nullptr) {  
         std::cout << linkList->number << ' ';  
@@ -748,19 +867,20 @@ void deleteCircularLinkList(LinkList* linkList, LinkList* head = nullptr) {
     }
 }
 
-int main() {  
-	int numbers[]{1, 2, 3};  
-	  
-	LinkList* lst = generateCircularLinkList(numbers, 3);  
-  
-    deleteCircularLinkList(nullptr);  
-    return 0;  
+// Recursive
+void deleteCircularLinkedList(LinkNode* linkNode, LinkNode* first = nullptr) {
+    if (linkNode && linkNode != first) {
+        deleteCircularLinkedList(linkNode->next, first == nullptr ? linkNode : first);
+        // std::cout << "Deleting Node with element: " << linkNode->number << '\n';
+        delete linkNode;
+    }
 }
 ```
 
 ## Insert in a circular list
 
 ```cpp
+// Iterative
 LinkList* insertInCircularLinkedList(
 	LinkList* linkList, const int& insertIndex, const int& insertElement
 ) {  
@@ -792,11 +912,43 @@ LinkList* insertInCircularLinkedList(
 	}  
     return nullptr;  
 }
+
+// Recursive
+LinkNode* insertInCircularLinkedList(LinkNode* linkNode, const int& insertIndex, const int& insertElement, const int& currentIndex = 0, LinkNode* previous = nullptr, LinkNode* first = nullptr) {  
+    if (linkNode) {  
+        if (currentIndex == insertIndex) {  
+            LinkNode* newElement = new LinkNode{insertElement, linkNode};  
+  
+            if (!previous) { // Insert at the beginning  
+                LinkNode* last = linkNode;  
+                while (last->next != linkNode)  
+                    last = last->next;  
+                last->next = newElement;  
+                return newElement;  
+            }            previous->next = newElement;  
+            return first;  
+        } 
+         
+        return insertInCircularLinkedList(  
+            linkNode->next,  
+            insertIndex,  
+            insertElement,  
+            currentIndex + 1,  
+            linkNode,  
+            first == nullptr ? linkNode : first  
+        );  
+    }  
+    
+    LinkNode* newElement = new LinkNode{insertElement, nullptr}; // Insert in empty Circular Linked List  
+    newElement->next = newElement;  
+    return newElement;  
+}
 ```
 
 ## Delete from a circular Linked List
 
 ```cpp
+// Iterative
 LinkNode* deleteFromCircularLinkLIst(LinkList* linkList, const int& deleteIndex) { 
     if (linkList == nullptr)  
         return nullptr;  
@@ -835,14 +987,52 @@ LinkNode* deleteFromCircularLinkLIst(LinkList* linkList, const int& deleteIndex)
 	}  
     return nullptr;  
 }
+
+// Recursive
+LinkNode* deleteFromCircularLinkedList(LinkNode* linkNode, const int& deleteIndex, const int& currentIndex = 0, LinkNode* previous = nullptr, LinkNode* first = nullptr) {
+    if (linkNode && linkNode != first) {
+        if (currentIndex == deleteIndex) {
+            if (!previous) {
+                if (linkNode->next == linkNode) {
+                    delete linkNode;
+                    return nullptr;
+                }
+
+                LinkNode* tail = linkNode;
+                while (tail->next != linkNode)
+                    tail = tail->next;
+                tail->next = linkNode->next;
+
+                delete linkNode;
+                return tail->next;
+            }
+
+            previous->next = linkNode->next;
+            delete linkNode;
+            return first;
+        }
+
+        return deleteFromCircularLinkedList(
+            linkNode->next,
+            deleteIndex,
+            currentIndex + 1,
+            linkNode,
+            first == nullptr ? linkNode : first
+        );
+    }
+
+    return nullptr;
+}
 ```
 
 ___
 # Double Linked List
+#### (1 <-> 2 <-> 3 <-> 4 <-> 5)
 
 ## Create, Delete Double Linked List
 
 ```cpp
+// Iterative
 DoubleLinkedList* generateDoubleLinkedList(const int* array, const int& arraySize) {  
     if (!arraySize)  
         return nullptr;  
@@ -860,19 +1050,39 @@ DoubleLinkedList* generateDoubleLinkedList(const int* array, const int& arraySiz
     
     return head;  
 }  
-  
-void deleteDoubleLinkedList(DoubleLinkedList* doubleLinkedList) {  
-    if (doubleLinkedList) {  
-        std::cout << doubleLinkedList->number << ' ';  
-     
-		deleteDoubleLinkedList(doubleLinkedList->next);  
-        delete doubleLinkedList;  
-    }}
+
+struct DoubleLinkNode {
+    int number;
+    DoubleLinkNode* previous;
+    DoubleLinkNode* next;
+};
+
+// Recursive
+DoubleLinkNode* generateDoubleLinkList(const int* array, const int& arraySize, const int& currentIndex = 0, DoubleLinkNode* previous = nullptr) {
+    if (currentIndex < arraySize) {
+        DoubleLinkNode* current = new DoubleLinkNode{*(array + currentIndex), previous, nullptr};
+        DoubleLinkNode* next = generateDoubleLinkList(array, arraySize, currentIndex + 1, current);
+        current->next = next;
+        return current;
+    }
+
+    return nullptr;
+}
+
+// Recursive Deletion
+void deleteDoubleLinkList(DoubleLinkNode* doubleLinkNode) {  
+    if (doubleLinkNode) {  
+        deleteDoubleLinkList(doubleLinkNode->next);  
+        std::cout << "Deleting: " << doubleLinkNode->number << '\n';  
+        delete doubleLinkNode;  
+    }
+}
 ```
 
 ## Insert in Double Link List
 
 ```cpp
+// Iterative
 DoubleLinkedList* insertInDoubleLinkList(
 	DoubleLinkedList* doubleLinkedList, const int& insertIndex, const int& insertElement
 ) {  
@@ -914,11 +1124,41 @@ DoubleLinkedList* insertInDoubleLinkList(
     
     return nullptr;  
 }
+
+// Recursive
+DoubleLinkNode *insertInDoubleLinkList(DoubleLinkNode *doubleLinkNode, const int &insertIndex, const int &insertElement, const int &currentIndex = 0, DoubleLinkNode *first = nullptr) {  
+    if (doubleLinkNode) {  
+        if (currentIndex == insertIndex) {  
+            DoubleLinkNode *newElement = new DoubleLinkNode{insertElement, doubleLinkNode->previous, doubleLinkNode};  
+  
+            if (!doubleLinkNode->previous) { // Insert at the beginning  
+                doubleLinkNode->previous = newElement;  
+                return newElement;  
+            }            doubleLinkNode->previous->next = newElement;  
+            doubleLinkNode->previous = newElement;  
+  
+            return first;  
+        }  
+        if (doubleLinkNode->next == nullptr && currentIndex + 1 == insertIndex) { // Insert at the end  
+            doubleLinkNode->next = new DoubleLinkNode{insertElement, doubleLinkNode, nullptr};  
+            return first;  
+        }  
+        return insertInDoubleLinkList(  
+            doubleLinkNode->next,  
+            insertIndex,  
+            insertElement,  
+            currentIndex + 1,  
+            first == nullptr ? doubleLinkNode : first  
+        );  
+    }  
+    return new DoubleLinkNode{insertElement, nullptr, nullptr};  
+}
 ```
 
 ## Delete from Double Link List
 
 ```cpp
+// Iterative
 DoubleLinkedList* deleteFromDoubleLinkedList(
 	DoubleLinkedList* doubleLinkedList, const int& deleteIndex
 ) {  
@@ -954,6 +1194,36 @@ DoubleLinkedList* deleteFromDoubleLinkedList(
     }  
     
     return nullptr;  
+}
+
+// Recursive
+DoubleLinkNode* deleteFromDoubleLinkList(DoubleLinkNode* doubleLinkNode, const int& deleteIndex, const int& currentIndex = 0, DoubleLinkNode* first = nullptr) {  
+    if (doubleLinkNode) {  
+         if (currentIndex == deleteIndex) {  
+             if (!doubleLinkNode->previous) { // Delete the first element  
+                 DoubleLinkNode* newFirst = doubleLinkNode->next;  
+                 if (!newFirst) { // Deleting a single element  
+                     delete doubleLinkNode;  
+                     return nullptr;  
+                 }                 newFirst->previous = nullptr;  
+                 delete doubleLinkNode;  
+                 return newFirst;  
+             }  
+             doubleLinkNode->previous->next = doubleLinkNode->next;  
+             if (doubleLinkNode->next)  
+                 doubleLinkNode->next->previous = doubleLinkNode->previous;  
+  
+             delete doubleLinkNode;  
+             return first;  
+         }  
+        return deleteFromDoubleLinkList(  
+            doubleLinkNode->next,  
+            deleteIndex,  
+            currentIndex + 1,  
+            first == nullptr ? doubleLinkNode : first  
+        );  
+    }  
+    return first; // Delete from an empty list || Delete invalid index  
 }
 ```
 
@@ -1002,8 +1272,10 @@ DoubleLinkedList* recursiveReverseDoubleLinkedList(
 
 ___
 # Circular Double Link List
+#### (1 <-> 2 <-> 3 <-> 4 <-> 5 <-> 1)
 
 ```cpp
+// Iterative
 DoubleLinkedList* createCircularDoubleLinkedList(
 	const int* array, const int& arraySize
 ) {  
@@ -1024,19 +1296,38 @@ DoubleLinkedList* createCircularDoubleLinkedList(
     return head;  
 }  
   
-void recursiveDisplayCircularDoubleLinkList(
-	DoubleLinkedList* doubleLinkedList, DoubleLinkedList* head = nullptr
-) {  
-    if (doubleLinkedList != head) {  
-        std::cout << doubleLinkedList->number << ' ';  
-        recursiveDisplayCircularDoubleLinkList(doubleLinkedList->next, head ? head : doubleLinkedList);  
+struct DoubleLinkNode {
+    int number;
+    DoubleLinkNode *previous;
+    DoubleLinkNode *next;
+};
+
+// Recursive
+DoubleLinkNode* createDoubleCircularLinkList(const int* array, const int& arraySize, const int& currentIndex = 0, DoubleLinkNode* previous = nullptr, DoubleLinkNode* first = nullptr) {
+    if (currentIndex < arraySize) {
+        DoubleLinkNode* current = new DoubleLinkNode{*(array + currentIndex), previous, nullptr};
+        DoubleLinkNode* next = createDoubleCircularLinkList(
+            array,
+            arraySize,
+            currentIndex + 1,
+            current,
+            first == nullptr ? current : first
+        );
+        current->next = next;
+        return current;
     }
+
+    if (first)
+        first->previous = previous;
+
+    return first;
 }
 ```
 
 ## Insert in Circular Double Link List
 
 ```cpp
+// Iterative
 DoubleLinkedList *insertInCircularDoubleLinkedList(
 	DoubleLinkedList *&doubleLinkedList, const int &insertIndex, 
 	const int &insertElement
@@ -1083,6 +1374,33 @@ DoubleLinkedList *insertInCircularDoubleLinkedList(
     }  
     
     return nullptr;  
+}
+
+// Recursive
+DoubleLinkNode* insertInDoubleCircularLinkList(DoubleLinkNode* doubleLinkNode, const int& insertIndex, const int& insertElement, const int& currentIndex = 0, DoubleLinkNode* first = nullptr) {
+    if (doubleLinkNode) {
+        if (currentIndex == insertIndex) {
+            DoubleLinkNode* newElement = new DoubleLinkNode{insertElement, doubleLinkNode->previous, doubleLinkNode};
+            doubleLinkNode->previous->next = newElement;
+            doubleLinkNode->previous = newElement;
+            if (insertIndex == 0)
+                return newElement;
+            return first;
+        }
+
+        return insertInDoubleCircularLinkList(
+            doubleLinkNode->next,
+            insertIndex,
+            insertElement,
+            currentIndex + 1,
+            first == nullptr ? doubleLinkNode : first
+        );
+    }
+
+    DoubleLinkNode* newSingleElement = new DoubleLinkNode{insertElement, nullptr, nullptr};
+    newSingleElement->previous = newSingleElement;
+    newSingleElement->next = newSingleElement;
+    return newSingleElement;
 }
 ```
 

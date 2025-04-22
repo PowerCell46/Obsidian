@@ -20,6 +20,20 @@
               "icon": "lucide-file",
               "title": "Linked Lists"
             }
+          },
+          {
+            "id": "f3e092bc2a290a76",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "ToDo.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "ToDo"
+            }
           }
         ]
       }
@@ -179,9 +193,12 @@
   },
   "active": "2ce78318a31eb07a",
   "lastOpenFiles": [
-    "Data Structures/Strings.md",
-    "Data Structures/Arrays.md",
     "ToDo.md",
+    "Data Structures/Arrays.md",
+    "Data Structures/Linked Lists.md",
+    "Data Structures/Binary Search Tree.md",
+    "Data Structures/Trees.md",
+    "Data Structures/Strings.md",
     "Data Structures/Recursion.md",
     "Investments/Stocks & Investments.md",
     "TreeGraph.canvas",
@@ -201,12 +218,9 @@
     "C++/C++ Constructors.md",
     "Data Structures/Data Structures.md",
     "Data Structures/Hashmap.md",
-    "Technical Analysis.md",
+    "Investments/Technical Analysis.md",
     "Investments/PE ratio.md",
     "C++/C++ Udemy.md",
-    "Data Structures/Trees.md",
-    "Data Structures/Linked Lists.md",
-    "Binary Search Tree.md",
     "C++/Pasted image 20250324172658.png",
     "C++/projects",
     "C++/images",

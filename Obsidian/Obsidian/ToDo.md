@@ -275,3 +275,6 @@ constants.js
 ## Rule 3/5/0 exercise second to last task (Lists)
 
 ctrl + .  clion create variable
+
+delete by value
+insert in sorted circular linked list
