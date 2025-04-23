@@ -4,6 +4,10 @@
   "interfaceFontFamily": "",
   "monospaceFontFamily": "Cascadia Code",
   "baseFontSizeAction": true,
-  "baseFontSize": 20,
-  "nativeMenus": true
+  "baseFontSize": 15,
+  "nativeMenus": true,
+  "cssTheme": "",
+  "enabledCssSnippets": [
+    "codeBlock"
+  ]
 }

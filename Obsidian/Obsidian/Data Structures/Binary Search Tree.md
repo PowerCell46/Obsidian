@@ -1,42 +1,63 @@
-Strict Binary Tree: every node has to have 0 or 2 children (not 1)
+<span style="color:rgb(255, 0, 0)">All Left Subtree elements are smaller.</span>
+<span style="color:rgb(255, 0, 0)">All Right Subtree elements are bigger.</span>
 
-### Representation
+Strict | Full Binary Tree: every node has to have 0 or 2 children (not 1)
 
-##### Array Representation
-Level by level from left to right
+### Array Representation
 
-Element at index
-<span style="color:rgb(255, 0, 0)">left child:</span> index * 2 + 1;
-<span style="color:rgb(255, 0, 0)">right child:</span> index * 2 + 2;
-<span style="color:rgb(255, 0, 0)">parent:</span> (index - 1) / 2
+Level by level, from left to right.
 
-[A B C D E F G]
+Element at is at index
+<span style="color:rgb(255, 0, 0)">left child index:</span> index * 2 + 1;
+<span style="color:rgb(255, 0, 0)">right child index:</span> index * 2 + 2;
+<span style="color:rgb(255, 0, 0)">parent index:</span> (index - 1) / 2
 
-A -> B
-A -> C
+```mermaid
+graph TD
+	A
+	A --> B
+	A --> C
+	B --> D
+	B --> E
+	C --> F
+	C --> G
+```
 
-B -> D
-B -> E
-C -> F
-C -> G
+### [A B C D E F G]
 
-<span style="color:rgb(97, 175, 239)">Complete Binary Tree</span>
+___
+## <span style="color:rgb(97, 175, 239)">Complete Binary Tree</span>
+
 All Elements are filled from left to right
 
-[A B C D E]
-A -> B
-A -> C
-B -> D
-B -> E
+```mermaid
+graph TD
+	10
+	10 --> 5
+	10 --> 15
+	5 --> 1
+	5 --> 7
+	15 --> 12
+	15 --> 20
+```
 
-Non Complete Binary Tree
-[A B C _ E]
-A -> C
-A -> C
-`- - -` 
-B -> E
+### [10 5 15 1 7 12 20]
 
-<span style="color:rgb(97, 175, 239)">Full Binary Tree</span>
+## <span style="color:rgb(97, 175, 239)">Non Complete Binary Tree</span>
+
+```mermaid
+graph TD
+	100
+	100 --> 50
+	100 --> 200
+	50 --> 0
+	50 --> 75
+	200 --> 250
+```
+
+### [A B C _ E]
+### <span style="color:rgb(255, 0, 0)">200 -> 150 is missing</span>
+
 
 ___
 ## Implementation
@@ -220,4 +241,90 @@ int main() {
 }
 ```
 
-https://dir.bg/
+
+## Delete element
+
+```cpp
+bool deleteElementFromABinarySearchTree(Node*& root, const int& deleteElement) {  
+    if (!root)  
+        return false;  
+  
+    Node* previousNode = nullptr;  
+    Node* currentNode = root;  
+  
+    while (currentNode && currentNode->data != deleteElement) {  
+        previousNode = currentNode;  
+  
+        if (deleteElement < currentNode->data)  
+            currentNode = currentNode->leftChild;  
+        else  
+            currentNode = currentNode->rightChild;  
+    }  
+    
+    if (!currentNode)  
+        return false;  
+  
+    auto findInorderPredecessor = [](Node* node) -> Node* {  
+        if (!node->leftChild)  
+            return node->rightChild; // or nullptr if no children  
+  
+        Node* parent = node;  
+        Node* pred = node->leftChild;  
+  
+        while (pred->rightChild) {  
+            parent = pred;  
+            pred = pred->rightChild;  
+        }  
+        if (parent->rightChild == pred)  
+            parent->rightChild = pred->leftChild;  
+        else  
+            parent->leftChild = pred->leftChild;  
+  
+        return pred;  
+    }; 
+     
+    if (currentNode == root) {  
+        Node* replacement = findInorderPredecessor(currentNode);  
+        if (!replacement) {  
+            delete root;  
+            root = nullptr;  
+            return true;  
+        }  
+        if (replacement != root->leftChild)  
+            replacement->leftChild = root->leftChild;  
+        if (replacement != root->rightChild)  
+            replacement->rightChild = root->rightChild;  
+  
+        delete root;  
+        root = replacement;  
+        return true;  
+    }  
+    
+    Node* replacement = findInorderPredecessor(currentNode);  
+    
+    if (!replacement) {  
+        if (previousNode->leftChild == currentNode)  
+            previousNode->leftChild = nullptr;  
+        else  
+            previousNode->rightChild = nullptr;  
+  
+        delete currentNode;  
+        return true;  
+    }  
+    
+    if (replacement != currentNode->leftChild)  
+        replacement->leftChild = currentNode->leftChild;  
+    
+    if (replacement != currentNode->rightChild)  
+        replacement->rightChild = currentNode->rightChild;  
+  
+    if (previousNode->leftChild == currentNode)  
+        previousNode->leftChild = replacement;  
+    else  
+        previousNode->rightChild = replacement;  
+  
+    delete currentNode;  
+    return true;  
+}
+```
+
