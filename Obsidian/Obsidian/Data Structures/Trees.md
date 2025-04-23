@@ -1,3 +1,38 @@
+Degree of a node: number of (direct) children it is having.
+Level: starts from 1 (root) downwards
+Height: same as level, but root is 0
+
+**N-ary Trees**
+3-ary Tree; 4-ary Tree; 
+**Strict N-ary Tree (has 0 or N number of children)**
+
+___
+## Tree Traversals
+
+```mermaid
+graph TD
+    A
+    A --> B
+    A --> C
+    B --> D
+    B --> E
+    C --> F
+    C --> G
+```
+
+<span style="color:rgb(255, 0, 0)">Pre order:</span> Root Left Right
+A (B D E) (C F G)
+
+<span style="color:rgb(255, 0, 0)">In order:</span> Left Root Right
+(D B E) A (F C G)
+
+<span style="color:rgb(255, 0, 0)">Post order:</span> Left Right Root
+(D E B) (F G C) A
+
+<span style="color:rgb(255, 0, 0)">Level order:</span>
+(A) (B C) (D E F G) 
+
+
 ```cpp
 class Node {  
 public:  

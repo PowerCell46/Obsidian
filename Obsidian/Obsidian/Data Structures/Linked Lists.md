@@ -821,6 +821,25 @@ LinkNode* mergeTwoLinkLists(LinkNode* first, LinkNode* second, LinkNode* newHead
 }
 ```
 
+## Link List has LOOP
+
+```cpp
+bool singularLinkListHasLoop(LinkNode* head) {
+    LinkNode* slow = head;
+    LinkNode* fast = head;
+
+    while (fast && fast->next) {
+        slow = slow->next;
+        fast = fast->next->next;
+
+        if (slow == fast)
+            return true;
+    }
+
+    return false;
+}
+```
+
 ___
 # Circular Linked List
 #### (1 -> 2 -> 3 -> 4 -> 5 -> 1)
@@ -1274,6 +1293,8 @@ ___
 # Circular Double Link List
 #### (1 <-> 2 <-> 3 <-> 4 <-> 5 <-> 1)
 
+## Create Circular Double Link List
+
 ```cpp
 // Iterative
 DoubleLinkedList* createCircularDoubleLinkedList(
@@ -1407,6 +1428,7 @@ DoubleLinkNode* insertInDoubleCircularLinkList(DoubleLinkNode* doubleLinkNode, c
 ## Delete from Circular Double Link List
 
 ```cpp
+// Iterative
 DoubleLinkedList* deleteFromCircularDoubleLinkedList(
 	DoubleLinkedList*& doubleLinkedList, const int& deleteIndex
 ) {  
@@ -1446,5 +1468,34 @@ DoubleLinkedList* deleteFromCircularDoubleLinkedList(
     }  
     
     return nullptr;  
+}
+
+// Recursive
+DoubleLinkNode* deleteFromDoubleCircularLinkList(DoubleLinkNode* doubleLinkNode, const int& deleteIndex, const int& currentIndex = 0, DoubleLinkNode* first = nullptr) {  
+    if (doubleLinkNode && doubleLinkNode != first) {  
+        if (currentIndex == deleteIndex) {  
+            if (doubleLinkNode->previous == doubleLinkNode && doubleLinkNode->next == doubleLinkNode) {  
+                delete doubleLinkNode;  
+                return nullptr;  
+            }            if (currentIndex == 0) {  
+                DoubleLinkNode* newFirst = doubleLinkNode->next;  
+                doubleLinkNode->previous->next = newFirst;  
+                newFirst->previous = doubleLinkNode->previous;  
+                delete doubleLinkNode;  
+                return newFirst;  
+            }  
+            doubleLinkNode->previous->next = doubleLinkNode->next;  
+            doubleLinkNode->next->previous = doubleLinkNode->previous;  
+            delete doubleLinkNode;  
+            return first;  
+        }  
+        return deleteFromDoubleCircularLinkList(  
+            doubleLinkNode->next,  
+            deleteIndex,  
+            currentIndex + 1,  
+            first == nullptr ? doubleLinkNode : first  
+        );  
+    }  
+    return first;  
 }
 ```

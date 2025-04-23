@@ -1,4 +1,44 @@
+Strict Binary Tree: every node has to have 0 or 2 children (not 1)
 
+### Representation
+
+##### Array Representation
+Level by level from left to right
+
+Element at index
+<span style="color:rgb(255, 0, 0)">left child:</span> index * 2 + 1;
+<span style="color:rgb(255, 0, 0)">right child:</span> index * 2 + 2;
+<span style="color:rgb(255, 0, 0)">parent:</span> (index - 1) / 2
+
+[A B C D E F G]
+
+A -> B
+A -> C
+
+B -> D
+B -> E
+C -> F
+C -> G
+
+<span style="color:rgb(97, 175, 239)">Complete Binary Tree</span>
+All Elements are filled from left to right
+
+[A B C D E]
+A -> B
+A -> C
+B -> D
+B -> E
+
+Non Complete Binary Tree
+[A B C _ E]
+A -> C
+A -> C
+`- - -` 
+B -> E
+
+<span style="color:rgb(97, 175, 239)">Full Binary Tree</span>
+
+___
 ## Implementation
 
 ```cpp
@@ -179,3 +219,5 @@ int main() {
     return 0;  
 }
 ```
+
+https://dir.bg/
