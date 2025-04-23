@@ -60,21 +60,20 @@ graph TD
 
 
 ___
-## Implementation
+## Search for an Element in BST (Binary Search Tree)
 
 ```cpp
-Node* binarySearchTree(Node* node, const int& searchElement) {    
-	if (node == nullptr)    
-		return nullptr;    
-	    
-	if (node->data == searchElement)    
-		return node;    
-	    
-	if (node->data < searchElement)    
-		return binarySearchTree(node->rightChild, searchElement);    
-	
-	// if (node->data > searchElement)    
-	return binarySearchTree(node->leftChild, searchElement);  
+Node* binarySearchTree(Node* node, const int& searchNumber) {  
+    if (node) {  
+        if (node->number == searchNumber)  
+            return node;  
+  
+        if (node->number < searchNumber)  
+            return binarySearchTree(node->rightChild, searchNumber);  
+  
+        return binarySearchTree(node->leftChild, searchNumber);  
+    }  
+    return nullptr;  
 }
 
 Node* binarySearchTree(Node* node, const int& searchElement) {  
@@ -91,156 +90,60 @@ Node* binarySearchTree(Node* node, const int& searchElement) {
 }
 ```
 
-## Insert Element in Binary Search Tree
+## Create and Insert in BST (Binary Search Tree)
 
 ```cpp
-Node* addElementToBinaryTree(
-	Node* currentNode, const int& insertElement, Node* previousNode=nullptr
-) {  
-    if (currentNode == nullptr) {  
-        if (previousNode == nullptr)  
-            return new Node{nullptr, insertElement, nullptr};  
-  
-        Node* newNode = new Node{nullptr, insertElement, nullptr};  
-  
-        if (previousNode->data < insertElement)  
-            previousNode->rightChild = newNode;  
-        else  
-            previousNode->leftChild = newNode;  
-  
-        return newNode;  
-    }  
-    
-    if (currentNode->data == insertElement)  
-        return currentNode;  
-  
-    if (currentNode->data > insertElement)  
-        return addElementToBinaryTree(currentNode->leftChild, insertElement, currentNode);  
-  
-    // if (currentNode->data < insertElement)  
-    return addElementToBinaryTree(currentNode->rightChild, insertElement, currentNode);  
-}
+struct Node {
+    int number;
+    Node* leftChild;
+    Node* rightChild;
+};
 
-// Iterative approach
-Node* addElementToBinaryTree(Node* currentNode, const int& insertElement) {  
-    Node* previous = nullptr;  
-  
-    while (true) {  
-        if (currentNode == nullptr) {  
-            if (previous == nullptr)  
-                return new Node{nullptr, insertElement, nullptr};  
-  
-            Node* newNode = new Node{nullptr, insertElement, nullptr};  
-  
-            if (previous->data > insertElement)  
-                previous->leftChild = newNode;  
-            else  
-                previous->rightChild = newNode;  
-  
-            return newNode;  
-        }  
-        
-        if (currentNode->data == insertElement)  
-            return currentNode;  
-  
-        previous = currentNode;  
-  
-        if (currentNode->data > insertElement)  
-            currentNode = currentNode->leftChild;  
-        else  
-            currentNode = currentNode->rightChild;  
+Node* insertInBinarySearchTree(Node* node, const int& insertValue, Node* previous = nullptr, Node* first = nullptr) {
+    if (node) {
+        if (node->number == insertValue)
+            return node;
+
+        if (node->number < insertValue)
+            return insertInBinarySearchTree(node->rightChild, insertValue, node, first == nullptr ? node : first);
+
+        return insertInBinarySearchTree(node->leftChild, insertValue, node, first == nullptr ? node : first);
     }
+
+    if (previous) {
+        Node* newNode = new Node{insertValue, nullptr, nullptr};
+
+        if (previous->number < insertValue)
+            previous->rightChild = newNode;
+        else
+            previous->leftChild = newNode;
+
+        return first;
+    }
+
+    return new Node{insertValue, nullptr, nullptr};
+}
+
+Node* createBinarySearchTree(const int* array, const int& arraySize) {
+    Node* tree = nullptr;
+
+    for (int i = 0; i < arraySize; ++i)
+        tree = insertInBinarySearchTree(tree, *(array + i));
+
+    return tree;
+}
+
+int main() {
+    constexpr int arraySize = 8;
+    const int* array = new int[arraySize]{9, 15, 5, 20, 6, 8, 12, 25};
+
+    Node* tree = createBinarySearchTree(array, arraySize);
+
+    delete[] array;
+
+    return 0;
 }
 ```
-
-## Create binary Tree
-
-```cpp
-class Node {  
-public:  
-    Node *leftChild;  
-    int data;  
-    Node *rightChild;  
-};  
-  
-Node* createBinarySearchTree(const int* array, const int& arraySize) {  
-    if (array == nullptr || arraySize <= 0)  
-        return nullptr;  
-  
-    Node* root = new Node{nullptr, *array, nullptr};  
-  
-    for (int i = 1; i < arraySize; ++i) {  
-        const int currentValue = *(array + i);  
-        Node* currentNode = root;  
-        Node* previousNode = nullptr;  
-  
-        while (true) {  
-            if (currentNode == nullptr) {  
-                Node* newNode = new Node{nullptr, currentValue, nullptr};  
-  
-                if (previousNode->data > currentValue)  
-                    previousNode->leftChild = newNode;  
-                else  
-                    previousNode->rightChild = newNode;  
-  
-                break;  
-            }  
-            
-            if (currentNode->data == currentValue)  
-                break;  
-  
-            if (currentNode->data > currentValue) {  
-                previousNode = currentNode;  
-                currentNode = currentNode->leftChild;  
-  
-            } else {  
-                previousNode = currentNode;  
-                currentNode = currentNode->rightChild;  
-            }        
-		}    
-	}
-	  
-    return root;  
-}  
-  
-void doubleArraySize(int*& array, int& arraySize) {  
-    int* newArray = new int[arraySize * 2]{};  
-  
-    for (int i = 0; i < arraySize; ++i)  
-        *(newArray + i) = *(array + i);  
-  
-    delete[] array;  
-    array = newArray;  
-    arraySize *= 2;  
-}  
-  
-int main() {  
-    std::string line;  
-    std::cout << "Enter Tree Elements: ";  
-    std::getline(std::cin, line);  
-    std::stringstream lineStream{line};  
-  
-    int dataSize = 20;  
-    int* dataArray = new int[dataSize]{};  
-  
-    int index{};  
-    int currentNumber;  
-  
-    while (lineStream >> currentNumber) {  
-        if (index == dataSize)  
-            doubleArraySize(dataArray, dataSize);  
-  
-        *(dataArray + index) = currentNumber;  
-        ++index;  
-    }  
-	    
-    Node* root = createBinarySearchTree(dataArray, index);  
-  
-    delete[] dataArray;  
-    return 0;  
-}
-```
-
 
 ## Delete element
 
@@ -325,6 +228,157 @@ bool deleteElementFromABinarySearchTree(Node*& root, const int& deleteElement) {
   
     delete currentNode;  
     return true;  
+}
+```
+
+____
+## Program for generating Mermaid BST
+
+```cpp
+#include <iostream>
+#include <queue>
+#include <sstream>
+
+
+struct Node {
+    int number;
+    Node* leftChild;
+    Node* rightChild;
+};
+
+#define EMPTY_NODE_VALUE -1
+
+Node* initializeTree() {
+    std::queue<Node*> treeQueue;
+
+    int rootNumber;
+    std::cout << "Enter Root: ";
+    std::cin >> rootNumber;
+
+    Node* root = new Node{rootNumber, nullptr, nullptr};
+    treeQueue.push(root);
+
+    while (!treeQueue.empty()) {
+        Node* currentNode = treeQueue.front();
+        int leftNumber, rightNumber;
+
+        std::cout << "Enter left child of " << currentNode->number << ": ";
+        std::cin >> leftNumber;
+
+        if (leftNumber != EMPTY_NODE_VALUE) {
+            Node* left = new Node{leftNumber, nullptr, nullptr};
+            currentNode->leftChild = left;
+            treeQueue.push(left);
+        } else
+            std::cout << "No left child added.\n";
+
+
+        std::cout << "Enter right child of " << currentNode->number << ": ";
+        std::cin >> rightNumber;
+
+        if (rightNumber != EMPTY_NODE_VALUE) {
+            Node* right = new Node{rightNumber, nullptr, nullptr};
+            currentNode->rightChild = right;
+            treeQueue.push(right);
+        } else
+            std::cout << "No right child added.\n";
+
+        treeQueue.pop();
+    }
+
+    return root;
+}
+
+Node* binarySearchTree(Node* node, const int& searchNumber) {
+    if (node) {
+        if (node->number == searchNumber)
+            return node;
+
+        if (node->number < searchNumber)
+            return binarySearchTree(node->rightChild, searchNumber);
+
+        return binarySearchTree(node->leftChild, searchNumber);
+    }
+
+    return nullptr;
+}
+
+Node* insertInBinarySearchTree(Node* node, const int& insertValue, Node* previous = nullptr, Node* first = nullptr) {
+    if (node) {
+        if (node->number == insertValue)
+            return node;
+
+        if (node->number < insertValue)
+            return insertInBinarySearchTree(node->rightChild, insertValue, node, first == nullptr ? node : first);
+
+        return insertInBinarySearchTree(node->leftChild, insertValue, node, first == nullptr ? node : first);
+    }
+
+    if (previous) {
+        Node* newNode = new Node{insertValue, nullptr, nullptr};
+
+        if (previous->number < insertValue)
+            previous->rightChild = newNode;
+        else
+            previous->leftChild = newNode;
+
+        return first;
+    }
+
+    return new Node{insertValue, nullptr, nullptr};
+}
+
+Node* createBinarySearchTree(const int* array, const int& arraySize) {
+    Node* tree = nullptr;
+
+    for (int i = 0; i < arraySize; ++i)
+        tree = insertInBinarySearchTree(tree, *(array + i));
+
+    return tree;
+}
+
+void displayMermaidBinarySearchTreeNode(const Node* node) {
+    static int nullNumber{};
+
+    if (node && (node->leftChild || node->rightChild)) {
+        if (node->leftChild)
+            std::cout << '\t' << node->number << " --> " << node->leftChild->number << '\n';
+        else
+            std::cout << '\t' << node->number << " --> X" << ++nullNumber << "[\"X\"]" << '\n';
+
+        if (node->rightChild)
+            std::cout << '\t' << node->number << " --> " << node->rightChild->number << '\n';
+        else
+            std::cout << '\t' << node->number << " --> X" << ++nullNumber << "[\"X\"]" << '\n';
+
+        displayMermaidBinarySearchTreeNode(node->leftChild);
+        displayMermaidBinarySearchTreeNode(node->rightChild);
+    }
+}
+
+void generateMermaidBinarySearchTree(const Node* node) {
+    if (!node) {
+        std::cout << "Empty Tree.\n";
+        return;
+    }
+    std::cout << "```mermaid\n" << "graph TD\n\t" << node->number << '\n';
+
+    displayMermaidBinarySearchTreeNode(node);
+
+    std::cout << "```";
+}
+
+int main() {
+    constexpr int arraySize = 8;
+    const int* array = new int[arraySize]{9, 15, 5, 20, 6, 8, 12, 25};
+
+    Node* treeNode = createBinarySearchTree(array, arraySize);
+
+    generateMermaidBinarySearchTree(treeNode);
+
+    delete[] array;
+
+    return 0;
 }
 ```
 
