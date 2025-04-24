@@ -3,14 +3,14 @@
 
 Strict | Full Binary Tree: every node has to have 0 or 2 children (not 1)
 
-### Array Representation
+# Array Representation
 
 Level by level, from left to right.
 
 Element at is at index
 <span style="color:rgb(255, 0, 0)">left child index:</span> index * 2 + 1;
 <span style="color:rgb(255, 0, 0)">right child index:</span> index * 2 + 2;
-<span style="color:rgb(255, 0, 0)">parent index:</span> (index - 1) / 2
+<span style="color:rgb(255, 0, 0)">parent index:</span> (index - 1) / 2;
 
 ```mermaid
 graph TD
@@ -24,6 +24,128 @@ graph TD
 ```
 
 ### [A B C D E F G]
+
+```cpp
+class ArrayBasedBinarySearchTree {
+    static constexpr int EMPTY_VALUE = 0;
+    int* data;
+    size_t size;
+public:
+    ArrayBasedBinarySearchTree() : data(nullptr), size(0) {}
+
+    explicit ArrayBasedBinarySearchTree(const size_t& size) : data(new int[size]{}), size(size) {}
+
+    ArrayBasedBinarySearchTree(const int* inputData, const size_t& size) : data(new int[size]), size(size) {
+        memcpy(data, inputData, sizeof(int) * size);
+    }
+
+    ArrayBasedBinarySearchTree(const ArrayBasedBinarySearchTree& other) : size(other.size), data(new int[other.size]) {
+        memcpy(this->data, other.data, sizeof(int) * other.size);
+    }
+
+    ArrayBasedBinarySearchTree& operator=(const ArrayBasedBinarySearchTree& other) {
+        if (this == &other)
+            return *this;
+
+        this->size = other.size;
+        delete[] this->data;
+        this->data = new int[other.size];
+        memcpy(this->data, other.data, sizeof(int) * other.size);
+        return *this;
+    }
+
+    static void resizeArray(int*& array, size_t& arraySize, const size_t& newArraySize) {
+        int* newArray = new int[newArraySize]{};
+        memcpy(newArray, array, sizeof(int) * arraySize);
+
+        delete[] array;
+        array = newArray;
+        arraySize = newArraySize;
+    }
+
+    void insertElement(const int& insertElement) {
+        if (insertElement == 0) {
+            std::cout << "0 is invalid element.\n";
+            return;
+        }
+
+        int insertIndex{};
+
+        if (this->data != nullptr) {
+            while (insertIndex < this->size) {
+                if (*(this->data + insertIndex) == EMPTY_VALUE) {
+                    *(this->data + insertIndex) = insertElement;
+                    return;
+                }
+
+                if (*(this->data + insertIndex) > insertElement) // Move to left child
+                    insertIndex = insertIndex * 2 + 1;
+                else if (*(this->data + insertIndex) < insertElement) // Move to right child
+                    insertIndex = insertIndex * 2 + 2;
+                else // If the element is found, return
+                    return;
+            }
+        }
+
+        resizeArray(this->data, this->size, insertIndex + 1);
+        *(this->data + insertIndex) = insertElement;
+    }
+
+    ~ArrayBasedBinarySearchTree() {
+        delete[] this->data;
+    }
+
+    friend std::ostream& operator<<(std::ostream& os, const ArrayBasedBinarySearchTree& arrayBasedTree);
+};
+
+std::ostream& operator<<(std::ostream& os, const ArrayBasedBinarySearchTree& arrayBasedTree) {
+    if (arrayBasedTree.size > 0) {
+        int nullIndex = 0;
+
+        os << "```mermaid\ngraph TD\n\t" << *arrayBasedTree.data << '\n';
+
+        for (int i = 0; i < arrayBasedTree.size; ++i) {
+            const int currentElement = *(arrayBasedTree.data + i);
+            const int leftChild = i * 2 + 1 < arrayBasedTree.size ? *(arrayBasedTree.data + i * 2 + 1) : 0;
+            const int rightChild = i * 2 + 2 < arrayBasedTree.size ? *(arrayBasedTree.data + i * 2 + 2) : 0;
+
+            if (leftChild != 0 || rightChild != 0) {
+                if (leftChild == 0)
+                    os << '\t' << currentElement << " --> X" << ++nullIndex << "[\"X\"]\n";
+                else
+                    os << '\t' << currentElement << " --> " << leftChild << '\n';
+
+                if (rightChild == 0)
+                    os << '\t' << currentElement << " --> X" << ++nullIndex << "[\"X\"]\n";
+                else
+                    os << '\t' << currentElement << " --> " << rightChild << '\n';
+            }
+        }
+        os << "```";
+
+    } else {
+        os << "Empty Tree.\n";
+    }
+
+    return os;
+}
+
+int main() {
+    size_t arrSize = 7;
+    int* data = new int[arrSize]{10, 5, 15, 1, 7, 12, 20};
+
+    ArrayBasedBinarySearchTree arrayBasedTree{data, arrSize};
+    // ArrayBasedBinarySearchTree arrayBasedTree{};
+
+    // arrayBasedTree.insertElement(6);
+    arrayBasedTree.insertElement(8);
+
+    std::cout << arrayBasedTree;
+
+    delete[] data;
+    return 0;
+}
+```
 
 ___
 ## <span style="color:rgb(97, 175, 239)">Complete Binary Tree</span>
@@ -145,89 +267,60 @@ int main() {
 }
 ```
 
-## Delete element
+## Delete from Binary Search Tree
 
 ```cpp
-bool deleteElementFromABinarySearchTree(Node*& root, const int& deleteElement) {  
-    if (!root)  
-        return false;  
-  
-    Node* previousNode = nullptr;  
-    Node* currentNode = root;  
-  
-    while (currentNode && currentNode->data != deleteElement) {  
-        previousNode = currentNode;  
-  
-        if (deleteElement < currentNode->data)  
-            currentNode = currentNode->leftChild;  
-        else  
-            currentNode = currentNode->rightChild;  
-    }  
-    
-    if (!currentNode)  
-        return false;  
-  
-    auto findInorderPredecessor = [](Node* node) -> Node* {  
-        if (!node->leftChild)  
-            return node->rightChild; // or nullptr if no children  
-  
-        Node* parent = node;  
-        Node* pred = node->leftChild;  
-  
-        while (pred->rightChild) {  
-            parent = pred;  
-            pred = pred->rightChild;  
-        }  
-        if (parent->rightChild == pred)  
-            parent->rightChild = pred->leftChild;  
-        else  
-            parent->leftChild = pred->leftChild;  
-  
-        return pred;  
-    }; 
-     
-    if (currentNode == root) {  
-        Node* replacement = findInorderPredecessor(currentNode);  
-        if (!replacement) {  
-            delete root;  
-            root = nullptr;  
-            return true;  
-        }  
-        if (replacement != root->leftChild)  
-            replacement->leftChild = root->leftChild;  
-        if (replacement != root->rightChild)  
-            replacement->rightChild = root->rightChild;  
-  
-        delete root;  
-        root = replacement;  
-        return true;  
-    }  
-    
-    Node* replacement = findInorderPredecessor(currentNode);  
-    
-    if (!replacement) {  
-        if (previousNode->leftChild == currentNode)  
-            previousNode->leftChild = nullptr;  
-        else  
-            previousNode->rightChild = nullptr;  
-  
-        delete currentNode;  
-        return true;  
-    }  
-    
-    if (replacement != currentNode->leftChild)  
-        replacement->leftChild = currentNode->leftChild;  
-    
-    if (replacement != currentNode->rightChild)  
-        replacement->rightChild = currentNode->rightChild;  
-  
-    if (previousNode->leftChild == currentNode)  
-        previousNode->leftChild = replacement;  
-    else  
-        previousNode->rightChild = replacement;  
-  
-    delete currentNode;  
-    return true;  
+int getHeightOfaBinarySearchTree(const Node *node) {
+    if (node) {
+        const int x = getHeightOfaBinarySearchTree(node->leftChild);
+        const int y = getHeightOfaBinarySearchTree(node->rightChild);
+
+        return std::max(x, y) + 1;
+    }
+
+    return 0;
+}
+
+Node *findInorderPredecessor(Node *node) {
+    while (node && node->rightChild)
+        node = node->rightChild;
+    return node;
+}
+
+Node *findInorderSuccessor(Node *node) {
+    while (node && node->leftChild)
+        node = node->leftChild;
+    return node;
+}
+
+Node *deleteFromBinarySearchTree(Node *node, const int &deleteValue) {
+    if (node) {
+        if (deleteValue < node->number) {
+            node->leftChild = deleteFromBinarySearchTree(node->leftChild, deleteValue);
+
+        } else if (deleteValue > node->number) {
+            node->rightChild = deleteFromBinarySearchTree(node->rightChild, deleteValue);
+
+        } else {
+            if (!node->leftChild && !node->rightChild) { // If it's a leaf
+                delete node;
+                return nullptr;
+            }
+
+            if (getHeightOfaBinarySearchTree(node->leftChild) > getHeightOfaBinarySearchTree(node->rightChild)) { // If left subtree is bigger
+                const Node *predecessor = findInorderPredecessor(node->leftChild);
+                node->number = predecessor->number;
+                node->leftChild = deleteFromBinarySearchTree(node->leftChild, predecessor->number);
+
+            } else { // If right subtree >= left subtree
+                const Node *successor = findInorderSuccessor(node->rightChild);
+                node->number = successor->number;
+                node->rightChild = deleteFromBinarySearchTree(node->rightChild, successor->number);
+            }
+        }
+        return node;
+    }
+    return nullptr;
 }
 ```
 
@@ -381,4 +474,3 @@ int main() {
     return 0;
 }
 ```
-
