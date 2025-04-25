@@ -29,4 +29,5 @@
 | agnostic                | someone who does not know, or believes that is impossible to know, if God exists. |
 | miscellaneous           |                                                                                   |
 | MIA                     | a member of armed forces has not returned and not found dead.                     |
+| **impudence**           | Наглост                                                                           |
  

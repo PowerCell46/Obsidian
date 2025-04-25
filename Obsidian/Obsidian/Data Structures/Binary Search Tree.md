@@ -162,7 +162,6 @@ graph TD
 	15 --> 12
 	15 --> 20
 ```
-
 ### [10 5 15 1 7 12 20]
 
 ## <span style="color:rgb(97, 175, 239)">Non Complete Binary Tree</span>
@@ -174,12 +173,11 @@ graph TD
 	100 --> 200
 	50 --> 0
 	50 --> 75
+	200 --> X1["X"]
 	200 --> 250
 ```
-
 ### [A B C _ E]
 ### <span style="color:rgb(255, 0, 0)">200 -> 150 is missing</span>
-
 
 ___
 ## Search for an Element in BST (Binary Search Tree)

@@ -143,3 +143,7 @@ void levelTraversal(Node* node) {
     }
 }
 ```
+
+# [[Binary Search Tree]]
+
+# [[AVL Trees]]
