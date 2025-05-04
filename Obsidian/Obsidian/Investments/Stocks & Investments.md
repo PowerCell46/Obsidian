@@ -76,6 +76,7 @@ ___
 dogs of the dow 
 dividend aristocrats
 NIFTY 50
+asia equity fund
 SWOT analysis
 The MOAT
 EPS - Earnings per share
@@ -88,3 +89,22 @@ quick (acid) test: (to see if a company can pay its current bills or debts that 
 ## Candlesticks
 Green/White - Closing price higher than open
 Red/Black - Closing price lower than open
+
+Stock Splits
+Lower price more attractive and easier for smaller investors
+hopefully increase stock price
+
+Preferred stocks
+Fixed dividend (more like a bond)
+Non-voting
+Ahead of common stock holder in event of liquidation
+
+Stock Buybacks
+Thinks the company is really undervalued
+Stock price increase 
+
+Harvest your losses
+Gain - Losses = Net
+Pay Tax on Net 
+
+global depository receipts

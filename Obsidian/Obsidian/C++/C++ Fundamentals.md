@@ -176,6 +176,9 @@ int main() {
 #include <vector>
 
 int main() {
+	std::vector<int> numbers(10, 10);
+	// Initialize Vector of 10 elements with default value 10.
+
 	std::vector<int> numbers;
 
 	numbers.push_back(10); // add element to the end

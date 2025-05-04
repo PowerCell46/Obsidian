@@ -1,138 +1,209 @@
+# Self-Balancing BST
 
-## No Fucking Idea...
+Height: (Single node 0) Max(leftSubtree, rightSubtree);
+Balance: leftSubtreeHeight - rightSubtreeHeight
+To be AVL tree: abs(balance) <= 1
+
+<span style="color:rgb(107, 255, 174)">Left heavy +</span>
+<span style="color:rgb(107, 255, 174)">Right heavy -</span>
 
 ```cpp
 struct Node {
-    int number;
+    int value;
     int height;
     Node* leftChild;
     Node* rightChild;
-};
+} *root = nullptr;
 
-int getNodeHeight(const Node* node) { // Getter for the height of a node
-    return node ? node->height : 0;
-}
-
-void updateNodeHeight(Node* node) {
-    if (node) // Set the height to the max of (left, right) children
-        node->height = std::max(
-            getNodeHeight(node->leftChild),
-            getNodeHeight(node->rightChild)
-        ) + 1;
-}
 
 int getBalanceFactor(const Node* node) {
-    return node ? getNodeHeight(node->leftChild) - getNodeHeight(node->rightChild) : 0;
+    const int heightLeftSubTree = node && node->leftChild ? node->leftChild->height : 0;
+    const int heightRightSubTree = node && node->rightChild ? node->rightChild->height : 0;
+
+    return heightLeftSubTree - heightRightSubTree;
 }
 
-Node* rotateRight(Node* unbalancedNode) {
-    Node* newRoot = unbalancedNode->leftChild;
-    Node* orphanSubtree = newRoot->rightChild;
-
-    newRoot->rightChild = unbalancedNode;
-    unbalancedNode->leftChild = orphanSubtree;
-
-    updateNodeHeight(unbalancedNode);
-    updateNodeHeight(newRoot);
-
-    return newRoot;
+int getNodeHeight(Node* node) {
+    return node->height = std::max(
+        node->leftChild ? node->leftChild->height : 0,
+        node->rightChild ? node->rightChild->height : 0
+    ) + 1;
 }
 
-Node* rotateLeft(Node* unbalancedNode) {
-    Node* newRoot = unbalancedNode->rightChild;
-    Node* orphanSubtree = newRoot->leftChild;
+// --- Start of Rotations ---
 
-    newRoot->leftChild = unbalancedNode;
-    unbalancedNode->rightChild = orphanSubtree;
+Node* leftLeftRotation(Node* node) {
+    Node* nodeLeftChild = node->leftChild;
+    Node* nodeLeftChildRightChild = nodeLeftChild->rightChild;
 
-    updateNodeHeight(unbalancedNode);
-    updateNodeHeight(newRoot);
+    nodeLeftChild->rightChild = node;
+    node->leftChild = nodeLeftChildRightChild;
+    node->height = getNodeHeight(node);
+    nodeLeftChild->height = getNodeHeight(nodeLeftChild);
 
-    return newRoot;
+    if (root == node)
+        root = nodeLeftChild;
+
+    return nodeLeftChild;
 }
 
-Node* insertInBinaryTree(Node* root, const int& insertElement) {
-    if (!root)
-        return new Node{insertElement, 1, nullptr, nullptr};
+Node* leftRightRotation(Node* node) {
+    Node* nodeLeftChild = node->leftChild;
+    Node* nodeLeftChildRightChild = nodeLeftChild->rightChild;
 
-    if (insertElement < root->number)
-        root->leftChild = insertInBinaryTree(root->leftChild, insertElement);
-    else if (insertElement > root->number)
-        root->rightChild = insertInBinaryTree(root->rightChild, insertElement);
-    else
-        return root; // Avoid duplicates
+    nodeLeftChild->rightChild = nodeLeftChildRightChild->leftChild;
+    node->leftChild = nodeLeftChildRightChild->rightChild;
 
-    updateNodeHeight(root);
+    nodeLeftChildRightChild->leftChild = nodeLeftChild;
+    nodeLeftChildRightChild->rightChild = node;
 
-    const int balance = getBalanceFactor(root);
+    nodeLeftChild->height = getNodeHeight(nodeLeftChildRightChild);
+    node->height = getNodeHeight(node);
+    nodeLeftChildRightChild->height = getNodeHeight(nodeLeftChildRightChild);
 
-    // Left-Left case
-    if (balance > 1 && insertElement < root->leftChild->number)
-        return rotateRight(root);
+    if (root == node)
+        root = nodeLeftChildRightChild;
 
-    // Right-Right case
-    if (balance < -1 && insertElement > root->rightChild->number)
-        return rotateLeft(root);
-
-    // Left-Right case
-    if (balance > 1 && insertElement > root->leftChild->number) {
-        root->leftChild = rotateLeft(root->leftChild);
-        return rotateRight(root);
-    }
-
-    // Right-Left case
-    if (balance < -1 && insertElement < root->rightChild->number) {
-        root->rightChild = rotateRight(root->rightChild);
-        return rotateLeft(root);
-    }
-
-    return root;
+    return nodeLeftChildRightChild;
 }
 
-// ---
+Node* rightRightRotation(Node* node) {
+    Node* nodeRightChild = node->rightChild;
+    Node* nodeRightChildLeftChild = nodeRightChild->leftChild;
 
-void displayMermaidBinarySearchTreeNode(const Node* node) {
-    static int nullNumber{};
+    nodeRightChild->leftChild = node;
+    node->rightChild = nodeRightChildLeftChild;
 
-    if (node && (node->leftChild || node->rightChild)) {
-        if (node->leftChild)
-            std::cout << '\t' << node->number << " --> " << node->leftChild->number << '\n';
+    node->height = getNodeHeight(node);
+    nodeRightChild->height = getNodeHeight(nodeRightChild);
+
+    if (root == node)
+        root = nodeRightChild;
+
+    return nodeRightChild;
+}
+
+Node* rightLeftRotation(Node* node) {
+    Node* nodeRightChild = node->rightChild;
+    Node* nodeRightChildLeftChild = nodeRightChild->leftChild;
+
+    nodeRightChild->leftChild = nodeRightChildLeftChild->rightChild;
+    node->rightChild = nodeRightChildLeftChild->leftChild;
+
+    nodeRightChildLeftChild->rightChild = nodeRightChild;
+    nodeRightChildLeftChild->leftChild = node;
+
+    nodeRightChild->height = getNodeHeight(nodeRightChild);
+    node->height = getNodeHeight(node);
+    nodeRightChildLeftChild->height = getNodeHeight(nodeRightChildLeftChild);
+
+    if (root == node)
+        root = nodeRightChildLeftChild;
+
+    return nodeRightChildLeftChild;
+}
+
+// --- End of Rotations ---
+
+Node* insertInBinarySearchTree(Node* node, const int& key) {
+    if (node) {
+        if (node->value == key)
+            return node;
+
+		// Directly reassigning the child (no need of previous)  
+        if (node->value > key)
+            node->leftChild = insertInBinarySearchTree(node->leftChild, key);
         else
-            std::cout << '\t' << node->number << " --> X" << ++nullNumber << "[\"X\"]" << '\n';
+            node->rightChild = insertInBinarySearchTree(node->rightChild, key);
 
-        if (node->rightChild)
-            std::cout << '\t' << node->number << " --> " << node->rightChild->number << '\n';
-        else
-            std::cout << '\t' << node->number << " --> X" << ++nullNumber << "[\"X\"]" << '\n';
+        node->height = getNodeHeight(node);
 
-        displayMermaidBinarySearchTreeNode(node->leftChild);
-        displayMermaidBinarySearchTreeNode(node->rightChild);
+        if (getBalanceFactor(node) == 2 && getBalanceFactor(node->leftChild) == 1)
+            return leftLeftRotation(node);
+
+        else if (getBalanceFactor(node) == 2 && getBalanceFactor(node->leftChild) == -1)
+            return leftRightRotation(node);
+
+        else if (getBalanceFactor(node) == -2 && getBalanceFactor(node->rightChild) == -1)
+            return rightRightRotation(node);
+
+        else if (getBalanceFactor(node) == -2 && getBalanceFactor(node->rightChild) == 1)
+            return rightLeftRotation(node);
+
+        return node;
     }
-}
 
-void generateMermaidBinarySearchTree(const Node* node) {
-    if (!node) {
-        std::cout << "Empty Tree.\n";
-        return;
-    }
-    std::cout << "```mermaid\n" << "graph TD\n\t" << node->number << '\n';
-
-    displayMermaidBinarySearchTreeNode(node);
-
-    std::cout << "```";
+    return new Node{key, 1, nullptr, nullptr};
 }
 
 int main() {
-    Node* root = nullptr;
-
-    int values[] = {30, 20, 40, 10, 25, 35, 50, 5, 45};
-    for (int val : values)
-        root = insertInBinaryTree(root, val);
-
-    generateMermaidBinarySearchTree(root);
-    std::cout << "\n";
+    root = insertInBinarySearchTree(root, 10);
+    root = insertInBinarySearchTree(root, 5);
+    root = insertInBinarySearchTree(root, 1);
 
     return 0;
 }
-
 ```
+
+# Rotations
+
+## Left Left Rotation
+
+```mermaid
+graph TD
+	30 --> 40
+	30 --> 20
+    40 --> 50
+	20 --> 10
+	20 --> 25
+	10 --> 5
+	10 --> 15
+	25 --> 28
+	5 --> 4
+```
+
+```mermaid
+graph TD
+	20 --> 10
+	20 --> 30
+	10 --> 5
+	10 --> 15
+	30 --> 25
+	30 --> 40
+	25 --> 28
+	40 --> 50
+	5 --> 4	
+```
+
+
+![[Pasted image 20250504154931.png]]
+
+## Left Right Rotation
+
+```mermaid
+graph TD
+	40 --> 20
+	40 --> 50
+	20 --> 10
+	20 --> 30
+	50 --> 60
+	10 --> 5
+	30 --> 25
+	30 --> 36
+	25 --> 27
+```
+
+```mermaid
+graph TD
+	30 --> 20
+	30 --> 40
+	20 --> 10
+	20 --> 25
+	25 --> 27
+	40 --> 35
+	40 --> 50
+	10 --> 5
+	50 --> 60
+```
+
+![[Pasted image 20250504215154.png]]

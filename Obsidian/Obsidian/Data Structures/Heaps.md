@@ -351,7 +351,7 @@ int main() {
 
 ## Heapify (Faster creation of a Heap)
 
-Basically the same as the insert logic, but instead of starting from the beginning start from the middle -> beginning, comparing elements with it's children.
+Basically the same as the insert logic, but instead of starting from the beginning start from the middle -> beginning, comparing elements with it's children. <span style="color:rgb(255, 0, 0)">Instead of n*log(n) it's n.</span>
 
 ```cpp
 void heapifyDown(int* heap, const int& currentIndex, const int& arraySize) {  
@@ -391,4 +391,3 @@ int main() {
     return 0;  
 }
 ```
-

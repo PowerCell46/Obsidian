@@ -796,7 +796,7 @@ int main() {
 
 ```cpp
 int main() {  
-    std::cout << (10 << 1) << std::endl; \
+    std::cout << (10 << 1) << std::endl;
     // shift all bits 1 position to the left: 10 * 2  
   
     std::cout << (10 >> 1) << std::endl; 
@@ -865,4 +865,27 @@ int main() {
     delete[] arrayShrunk;  
     return 0;  
 }
+```
+
+## Explicit key word
+
+Without explicit
+
+```cpp
+class MyHashSet {
+public:
+    MyHashSet(const size_t& size);
+};
+
+MyHashSet hashSet = 100; // ⚡ Implicitly converts 100 into MyHashSet
+```
+
+With explicit
+
+```cpp
+explicit MyHashSet(const size_t& size);
+
+MyHashSet hashSet = 100; // ❌ Error: no implicit conversion allowed
+MyHashSet hashSet(100); // ✅ Correct
+MyHashSet hashSet{100}; // ✅ Also correct (brace initialization)
 ```

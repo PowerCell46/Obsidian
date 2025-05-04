@@ -133,7 +133,7 @@ const references
 random numbers
 Анализът на граничните стойности
 OLTP databases
-
+𝐂𝐨𝐧𝐭𝐞𝐱𝐭 𝐌𝐚𝐧𝐚𝐠𝐞𝐫𝐬
 Hadoop
 Аctive directory
 Apache Spark
@@ -258,15 +258,6 @@ void func(Args... args) {
 https://stockevents.app/en/dividend-tracker
 https://www.quiverquant.com/
 https://robinhood.com/eu/en/about/crypto/
-
-деплou fdrontend version 
-
-conf/webpack
-TestAnvoice.js
-
-
-webpack.config.dev.js = delete the API URL
-Replace api url with a new consnts in the static folder
 
 constants.js
 

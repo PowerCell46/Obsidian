@@ -1,5 +1,8 @@
-
 ## Selection Sort
+
+- The **outer loop** picks each element one by one (starting from index 0).
+- The **inner loop** searches for the **smallest element** in the remaining unsorted part of the array.
+- After finding the smallest element, you **swap** it with the current element from the outer loop.
 
 ```cpp
 // Custom Impl
@@ -35,6 +38,8 @@ void selectionSort(int* array, const int& size) {
 
 ## Bubble sort
 
+Starting from the beginning, use a nested loop to compare and swap adjacent elements if they are out of order. This process moves the largest elements to the end of the array with each full pass. After each outer loop iteration, the number of elements to check decreases by one, as the largest elements are already sorted at the end.
+
 ```cpp
 // Custom Impl 
 void bubleSort(int* array, const int& arraySize) {  
@@ -65,7 +70,9 @@ void bubleSort(int* array, const int& arraySize) {
 }
 ```
 
-## Insertion Sort
+## Insertion Sort (Favourite)
+
+Starting from the second element, insert the current number into the correct position within the previous subarray, which is already sorted. This can be optimized by using binary search to find the correct insertion index. Repeat this process until reaching the end of the array.
 
 ```cpp
 // Custom Impl
