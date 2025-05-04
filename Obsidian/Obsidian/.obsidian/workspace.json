@@ -4,25 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "19616ac5983c8e84",
+        "id": "b1a39d23876d7102",
         "type": "tabs",
         "children": [
           {
-            "id": "f70705a02dbeabe3",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Data Structures/Trees.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "Trees"
-            }
-          },
-          {
-            "id": "252482c3b14363c7",
+            "id": "902e49ada48e5879",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -36,33 +22,18 @@
             }
           },
           {
-            "id": "00ba7961cedd810a",
+            "id": "ec94f9e1bc334195",
             "type": "leaf",
             "state": {
               "type": "excalidraw",
               "state": {
-                "file": "Excalidraw/Drawing 2025-05-04 15.34.35.excalidraw.md"
+                "file": "Excalidraw/Drawing 2025-05-05 00.28.42.excalidraw.md"
               },
               "icon": "excalidraw-icon",
-              "title": "Drawing 2025-05-04 15.34.35.excalidraw"
-            }
-          },
-          {
-            "id": "4c99c00363fa2a51",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Investments/Stocks & Investments.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "Stocks & Investments"
+              "title": "Drawing 2025-05-05 00.28.42.excalidraw"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -219,18 +190,25 @@
       "markdown-importer:Open format converter": false
     }
   },
-  "active": "252482c3b14363c7",
+  "active": "902e49ada48e5879",
   "lastOpenFiles": [
-    "Pasted image 20250504215154.png",
-    "Excalidraw/Drawing 2025-05-04 15.34.35.excalidraw.md",
+    "Excalidraw/Drawing 2025-05-05 00.28.42.excalidraw.md",
     "Data Structures/AVL Trees.md",
-    "Pasted Image 20250504213200_983.png",
-    "Pasted image 20250504154931.png",
+    "Pasted image 20250505003950.png",
+    "Pasted Image 20250505002928_642.png",
+    "Pasted image 20250504154931 1.png",
     "Data Structures/Trees.md",
     "Investments/Stocks & Investments.md",
-    "Untitled.canvas",
+    "Excalidraw/Drawing 2025-05-04 15.34.35.excalidraw.md",
+    "Pasted image 20250504154931.png",
     "Pasted Image 20250504153450_534.png",
     "Pasted image 20250504153402.png",
+    "Excalidraw/Drawing 2025-05-04 22.08.14.excalidraw.md",
+    "Pasted Image 20250505002107_946.png",
+    "Pasted image 20250505000717.png",
+    "Pasted Image 20250504220833_134.png",
+    "Untitled.canvas",
+    "Pasted image 20250504215154.png",
     "Data Structures/Linked Lists.md",
     "Data Structures/Arrays.md",
     "Data Structures/Binary Search Tree.md",
@@ -251,19 +229,11 @@
     "C++/C++ Goto.md",
     "Data Structures/Recursion.md",
     "Data Structures/Strings.md",
-    "Latona/Santa.md",
     "Untitled 1.canvas",
-    "Latona/Santa SQL queries.md",
-    "C++/Pasted image 20250324172658.png",
     "C++/projects",
     "C++/images",
     "Investments",
-    "JavaScript/Pasted image 20250108004634.png",
-    "JavaScript/Pasted image 20250108004253.png",
     "JavaScript",
-    "JavaScript/Pasted image 20250107153140.png",
-    "Pasted image 20250107214714.png",
-    "JavaScript/Pasted image 20250107153056.png",
     "University/images",
     "Blockchain",
     "C",

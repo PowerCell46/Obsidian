@@ -7,6 +7,8 @@ To be AVL tree: abs(balance) <= 1
 <span style="color:rgb(107, 255, 174)">Left heavy +</span>
 <span style="color:rgb(107, 255, 174)">Right heavy -</span>
 
+## AVL Binary Tree implementation
+
 ```cpp
 struct Node {
     int value;
@@ -178,6 +180,7 @@ graph TD
 
 ![[Pasted image 20250504154931.png]]
 
+___
 ## Left Right Rotation
 
 ```mermaid
@@ -206,4 +209,58 @@ graph TD
 	50 --> 60
 ```
 
+
 ![[Pasted image 20250504215154.png]]
+___
+
+## Right Right Rotation
+
+```mermaid
+graph TD
+	25 --> 20
+	25 --> 35
+	35 --> 30
+	35 --> 40
+	40 --> 50
+	50 --> 45
+```
+
+```mermaid
+graph TD
+	25 --> 20
+	25 --> 40
+	40 --> 35
+	40 --> 50
+	35 --> 30
+	35 --> 45
+```
+
+
+![[Pasted image 20250505000717.png]]
+
+___
+## Right Left Rotation
+
+```mermaid
+graph TD
+	25 --> 20
+	25 --> 40
+	40 --> 30
+	40 --> 50
+	30 --> 35
+	50 --> 45
+```
+
+
+```mermaid
+graph TD
+	30 --> 25
+	30 --> 40
+	25 --> 20
+	40 --> 35
+	40 --> 50
+	50 --> 45 
+```
+
+
+![[Pasted image 20250505003950.png]]
