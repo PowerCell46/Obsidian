@@ -10,138 +10,170 @@ To be AVL tree: abs(balance) <= 1
 ## AVL Binary Tree implementation
 
 ```cpp
+#include <iostream>
+
 struct Node {
     int value;
     int height;
     Node* leftChild;
     Node* rightChild;
-} *root = nullptr;
+};
 
+int getNodeHeight(const Node* node) {
+    const int leftSubtreeHeight = node && node->leftChild ? node->leftChild->height : 0;
+    const int rightSubtreeHeight = node && node->rightChild ? node->rightChild->height : 0;
 
-int getBalanceFactor(const Node* node) {
-    const int heightLeftSubTree = node && node->leftChild ? node->leftChild->height : 0;
-    const int heightRightSubTree = node && node->rightChild ? node->rightChild->height : 0;
-
-    return heightLeftSubTree - heightRightSubTree;
-}
-
-int getNodeHeight(Node* node) {
-    return node->height = std::max(
-        node->leftChild ? node->leftChild->height : 0,
-        node->rightChild ? node->rightChild->height : 0
+    return std::max(
+        leftSubtreeHeight,
+        rightSubtreeHeight
     ) + 1;
 }
 
-// --- Start of Rotations ---
+int getBalanceFactor(const Node* node) {
+    const int leftSubtreeHeight = node && node->leftChild ? node->leftChild->height : 0;
+    const int rightSubtreeHeight = node && node->rightChild ? node->rightChild->height : 0;
 
-Node* leftLeftRotation(Node* node) {
-    Node* nodeLeftChild = node->leftChild;
-    Node* nodeLeftChildRightChild = nodeLeftChild->rightChild;
-
-    nodeLeftChild->rightChild = node;
-    node->leftChild = nodeLeftChildRightChild;
-    node->height = getNodeHeight(node);
-    nodeLeftChild->height = getNodeHeight(nodeLeftChild);
-
-    if (root == node)
-        root = nodeLeftChild;
-
-    return nodeLeftChild;
+    return leftSubtreeHeight - rightSubtreeHeight;
 }
 
-Node* leftRightRotation(Node* node) {
-    Node* nodeLeftChild = node->leftChild;
-    Node* nodeLeftChildRightChild = nodeLeftChild->rightChild;
+Node* leftLeftRotation(Node* node, Node*& root) {
+    Node* newRoot = node->leftChild; // Making the middle node root
+    Node* newRootRightChildren = newRoot->rightChild; // Keeping its right child
 
-    nodeLeftChild->rightChild = nodeLeftChildRightChild->leftChild;
-    node->leftChild = nodeLeftChildRightChild->rightChild;
+    newRoot->rightChild = node; // Setting previous parent as a right child
+    node->leftChild = newRootRightChildren; // Setting the kept right child as a left child to the previous root
 
-    nodeLeftChildRightChild->leftChild = nodeLeftChild;
-    nodeLeftChildRightChild->rightChild = node;
-
-    nodeLeftChild->height = getNodeHeight(nodeLeftChildRightChild);
+    // Updating the heights
     node->height = getNodeHeight(node);
-    nodeLeftChildRightChild->height = getNodeHeight(nodeLeftChildRightChild);
+    newRoot->height = getNodeHeight(newRoot);
 
     if (root == node)
-        root = nodeLeftChildRightChild;
+        root = newRoot;
 
-    return nodeLeftChildRightChild;
+    return newRoot;
 }
 
-Node* rightRightRotation(Node* node) {
-    Node* nodeRightChild = node->rightChild;
-    Node* nodeRightChildLeftChild = nodeRightChild->leftChild;
+Node* rightRightRotation(Node* node, Node*& root) {
+    Node* newRoot = node->rightChild; // Making the middle node root
+    Node* newRootLeftChildren = newRoot->leftChild; // Keeping its left children
 
-    nodeRightChild->leftChild = node;
-    node->rightChild = nodeRightChildLeftChild;
+    newRoot->leftChild = node; // Setting previous parent as a left child
+    node->rightChild = newRootLeftChildren; // Setting the kept right child as a right child to the previous root
 
+    // Updating the heights
+    newRoot->height = getNodeHeight(newRoot);
     node->height = getNodeHeight(node);
-    nodeRightChild->height = getNodeHeight(nodeRightChild);
 
     if (root == node)
-        root = nodeRightChild;
+        root = newRoot;
 
-    return nodeRightChild;
+    return newRoot;
 }
 
-Node* rightLeftRotation(Node* node) {
-    Node* nodeRightChild = node->rightChild;
-    Node* nodeRightChildLeftChild = nodeRightChild->leftChild;
+Node* leftRightRotation(Node* node, Node*& root) {
+    // --- Right rotation ---
+    Node* oldLeftChild = node->leftChild;
+    Node* newLeftChild = oldLeftChild->rightChild;
 
-    nodeRightChild->leftChild = nodeRightChildLeftChild->rightChild;
-    node->rightChild = nodeRightChildLeftChild->leftChild;
+    oldLeftChild->rightChild = newLeftChild->leftChild; // Attach the left children from the right rotate
+    newLeftChild->leftChild = oldLeftChild; // Setting the old parent as a left child
 
-    nodeRightChildLeftChild->rightChild = nodeRightChild;
-    nodeRightChildLeftChild->leftChild = node;
+    node->leftChild = newLeftChild; // Setting the new left child at its new place
 
-    nodeRightChild->height = getNodeHeight(nodeRightChild);
-    node->height = getNodeHeight(node);
-    nodeRightChildLeftChild->height = getNodeHeight(nodeRightChildLeftChild);
+    // Updating the heights
+    oldLeftChild->height = getNodeHeight(oldLeftChild);
+    newLeftChild->height = getNodeHeight(newLeftChild);
+
+    //---------------------------------------------------------------------
+
+    // --- Left rotation ---
+    Node* oldRoot = node;
+    Node* newRoot = node->leftChild;
+
+    oldRoot->leftChild = newRoot->rightChild; // Attach the right children from the left rotate
+    newRoot->rightChild = oldRoot; // Setting the old parent as a right child
+
+    // Updating the heights
+    oldRoot->height = getNodeHeight(oldRoot);
+    newRoot->height = getNodeHeight(newRoot);
 
     if (root == node)
-        root = nodeRightChildLeftChild;
+        root = newRoot;
 
-    return nodeRightChildLeftChild;
+    return newRoot;
 }
 
-// --- End of Rotations ---
+Node* rightLeftRotation(Node* node, Node*& root) {
+    // --- Left rotation ---
+    Node* oldRightChild = node->rightChild;
+    Node* newRightChild = node->rightChild->leftChild;
 
-Node* insertInBinarySearchTree(Node* node, const int& key) {
+    oldRightChild->leftChild = newRightChild->rightChild; // Attach the right children from the left rotate
+    newRightChild->rightChild = oldRightChild; // Setting the old parent as a right child
+
+    node->rightChild = newRightChild; // Setting the new right child at its new place
+
+    // Updating the heights
+    oldRightChild->height = getNodeHeight(oldRightChild);
+    newRightChild->height = getNodeHeight(newRightChild);
+
+    //---------------------------------------------------------------------
+    // --- Right rotation ---
+
+    Node* oldRoot = node;
+    Node* newRoot = node->rightChild;
+
+    oldRoot->rightChild = newRoot->leftChild; // Attach the left children from the right rotate
+    newRoot->leftChild = oldRoot; // Setting the old parent as a left child
+
+    // Updating the heights
+    oldRoot->height = getNodeHeight(oldRoot);
+    newRoot->height = getNodeHeight(newRoot);
+
+    if (root == node)
+        root = newRoot;
+
+    return newRoot;
+}
+
+Node* insertInAvlBinarySearchTree(Node* node, const int& insertElement, Node* root = nullptr) {
     if (node) {
-        if (node->value == key)
+        if (node->value == insertElement)
             return node;
 
-		// Directly reassigning the child (no need of previous)  
-        if (node->value > key)
-            node->leftChild = insertInBinarySearchTree(node->leftChild, key);
+        root = root ? root : node;
+
+        if (node->value > insertElement)
+            node->leftChild = insertInAvlBinarySearchTree(node->leftChild, insertElement);
         else
-            node->rightChild = insertInBinarySearchTree(node->rightChild, key);
+            node->rightChild = insertInAvlBinarySearchTree(node->rightChild, insertElement);
 
         node->height = getNodeHeight(node);
 
         if (getBalanceFactor(node) == 2 && getBalanceFactor(node->leftChild) == 1)
-            return leftLeftRotation(node);
+            return leftLeftRotation(node, root);
 
         else if (getBalanceFactor(node) == 2 && getBalanceFactor(node->leftChild) == -1)
-            return leftRightRotation(node);
+            return leftRightRotation(node, root);
 
         else if (getBalanceFactor(node) == -2 && getBalanceFactor(node->rightChild) == -1)
-            return rightRightRotation(node);
+            return rightRightRotation(node, root);
 
         else if (getBalanceFactor(node) == -2 && getBalanceFactor(node->rightChild) == 1)
-            return rightLeftRotation(node);
+            return rightLeftRotation(node, root);
 
         return node;
     }
 
-    return new Node{key, 1, nullptr, nullptr};
+    return new Node{insertElement, 1, nullptr, nullptr};
 }
 
+
 int main() {
-    root = insertInBinarySearchTree(root, 10);
-    root = insertInBinarySearchTree(root, 5);
-    root = insertInBinarySearchTree(root, 1);
+    Node* root = insertInAvlBinarySearchTree(nullptr, 10);
+
+    root = insertInAvlBinarySearchTree(root, 20);
+    root = insertInAvlBinarySearchTree(root, 5);
 
     return 0;
 }

@@ -14,7 +14,7 @@ Beta (5Y Monthly)1.01
 = 1.0 - same price movements as the wider market
 /> 1.0 Swifts wider up/down than the market
 /< 1.0 Swifts less up/down than the market
-
+Negative: Moves opposite direction of the index.
 ## PE
 price per share / earnings per share
 whats the price im paying relative to the company's earnings 
@@ -52,6 +52,9 @@ less than 10.0 (the lower the better)
 ## Profit margin
 
 ## Debt to equity
+
+## Sharpe Ratio
+excess risk that was taken by the investor. Above 1.0 is generally considered good (you are getting excess returns relative to its volatility)
 
 ____
 #### Divident metrics
@@ -108,3 +111,4 @@ Gain - Losses = Net
 Pay Tax on Net 
 
 global depository receipts
+

@@ -4,11 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "b1a39d23876d7102",
+        "id": "84fe0219489ea2b3",
         "type": "tabs",
         "children": [
           {
-            "id": "902e49ada48e5879",
+            "id": "2a26db59740fe4d1",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -22,15 +22,29 @@
             }
           },
           {
-            "id": "ec94f9e1bc334195",
+            "id": "a123c9bb5c6f08b6",
             "type": "leaf",
             "state": {
-              "type": "excalidraw",
+              "type": "markdown",
               "state": {
-                "file": "Excalidraw/Drawing 2025-05-05 00.28.42.excalidraw.md"
+                "file": "Data Structures/AVL Trees.md",
+                "mode": "source",
+                "source": false
               },
-              "icon": "excalidraw-icon",
-              "title": "Drawing 2025-05-05 00.28.42.excalidraw"
+              "icon": "lucide-file",
+              "title": "AVL Trees"
+            }
+          },
+          {
+            "id": "4685fed201106fe6",
+            "type": "leaf",
+            "state": {
+              "type": "image",
+              "state": {
+                "file": "Pasted image 20250505000717.png"
+              },
+              "icon": "lucide-image",
+              "title": "Pasted image 20250505000717"
             }
           }
         ]
@@ -190,25 +204,26 @@
       "markdown-importer:Open format converter": false
     }
   },
-  "active": "902e49ada48e5879",
+  "active": "2a26db59740fe4d1",
   "lastOpenFiles": [
-    "Excalidraw/Drawing 2025-05-05 00.28.42.excalidraw.md",
+    "Pasted image 20250505000717.png",
     "Data Structures/AVL Trees.md",
+    "Excalidraw/Drawing 2025-05-05 00.28.42.excalidraw.md",
+    "Excalidraw/Drawing 2025-05-05 11.15.06.excalidraw.md",
+    "Investments/Stocks & Investments.md",
+    "Pasted image 20250505112531.png",
     "Pasted image 20250505003950.png",
     "Pasted Image 20250505002928_642.png",
     "Pasted image 20250504154931 1.png",
     "Data Structures/Trees.md",
-    "Investments/Stocks & Investments.md",
     "Excalidraw/Drawing 2025-05-04 15.34.35.excalidraw.md",
     "Pasted image 20250504154931.png",
     "Pasted Image 20250504153450_534.png",
     "Pasted image 20250504153402.png",
     "Excalidraw/Drawing 2025-05-04 22.08.14.excalidraw.md",
     "Pasted Image 20250505002107_946.png",
-    "Pasted image 20250505000717.png",
     "Pasted Image 20250504220833_134.png",
     "Untitled.canvas",
-    "Pasted image 20250504215154.png",
     "Data Structures/Linked Lists.md",
     "Data Structures/Arrays.md",
     "Data Structures/Binary Search Tree.md",
@@ -228,7 +243,6 @@
     "TreeGraph.canvas",
     "C++/C++ Goto.md",
     "Data Structures/Recursion.md",
-    "Data Structures/Strings.md",
     "Untitled 1.canvas",
     "C++/projects",
     "C++/images",
