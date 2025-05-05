@@ -22,29 +22,17 @@
             }
           },
           {
-            "id": "a123c9bb5c6f08b6",
+            "id": "8cf8b68953bdef28",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Data Structures/AVL Trees.md",
+                "file": "Data Structures/Binary Search Tree.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "AVL Trees"
-            }
-          },
-          {
-            "id": "4685fed201106fe6",
-            "type": "leaf",
-            "state": {
-              "type": "image",
-              "state": {
-                "file": "Pasted image 20250505000717.png"
-              },
-              "icon": "lucide-image",
-              "title": "Pasted image 20250505000717"
+              "title": "Binary Search Tree"
             }
           }
         ]
@@ -206,8 +194,9 @@
   },
   "active": "2a26db59740fe4d1",
   "lastOpenFiles": [
-    "Pasted image 20250505000717.png",
+    "Data Structures/Binary Search Tree.md",
     "Data Structures/AVL Trees.md",
+    "Pasted image 20250505000717.png",
     "Excalidraw/Drawing 2025-05-05 00.28.42.excalidraw.md",
     "Excalidraw/Drawing 2025-05-05 11.15.06.excalidraw.md",
     "Investments/Stocks & Investments.md",
@@ -226,7 +215,6 @@
     "Untitled.canvas",
     "Data Structures/Linked Lists.md",
     "Data Structures/Arrays.md",
-    "Data Structures/Binary Search Tree.md",
     "Data Structures/Hashmap.md",
     "Graphs.md",
     "Data Structures/Heaps.md",
