@@ -4,38 +4,65 @@
     "type": "split",
     "children": [
       {
-        "id": "84fe0219489ea2b3",
+        "id": "0db68870d719516f",
         "type": "tabs",
         "children": [
           {
-            "id": "2a26db59740fe4d1",
+            "id": "41616ee9b47fe351",
             "type": "leaf",
             "state": {
-              "type": "markdown",
+              "type": "excalidraw",
               "state": {
-                "file": "Data Structures/AVL Trees.md",
-                "mode": "source",
-                "source": false
+                "file": "Excalidraw/Drawing 2025-05-04 22.08.14.excalidraw.md"
               },
-              "icon": "lucide-file",
-              "title": "AVL Trees"
+              "icon": "excalidraw-icon",
+              "title": "Drawing 2025-05-04 22.08.14.excalidraw"
             }
           },
           {
-            "id": "8cf8b68953bdef28",
+            "id": "15b1106c951b6fcf",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Data Structures/Binary Search Tree.md",
+                "file": "Investments/Stocks & Investments.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Binary Search Tree"
+              "title": "Stocks & Investments"
+            }
+          },
+          {
+            "id": "2107f3519f0bd9c8",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "2-3 Trees.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "2-3 Trees"
+            }
+          },
+          {
+            "id": "b7ced9fe15a79198",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "ToDo.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "ToDo"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -92,19 +119,18 @@
             "id": "45aa6ef74fda6006",
             "type": "leaf",
             "state": {
-              "type": "excalidraw",
-              "state": {
-                "file": "Excalidraw/Drawing 2024-07-26 10.02.34.excalidraw.md"
-              },
-              "icon": "excalidraw-icon",
-              "title": "Drawing 2024-07-26 10.02.34.excalidraw"
+              "type": "empty",
+              "state": {},
+              "icon": "lucide-file",
+              "title": "New tab"
             }
           }
         ]
       }
     ],
     "direction": "horizontal",
-    "width": 242.5
+    "width": 242.5,
+    "collapsed": true
   },
   "right": {
     "id": "9ea3228301ee5096",
@@ -192,26 +218,29 @@
       "markdown-importer:Open format converter": false
     }
   },
-  "active": "2a26db59740fe4d1",
+  "active": "15b1106c951b6fcf",
   "lastOpenFiles": [
-    "Data Structures/Binary Search Tree.md",
-    "Data Structures/AVL Trees.md",
-    "Pasted image 20250505000717.png",
-    "Excalidraw/Drawing 2025-05-05 00.28.42.excalidraw.md",
-    "Excalidraw/Drawing 2025-05-05 11.15.06.excalidraw.md",
-    "Investments/Stocks & Investments.md",
-    "Pasted image 20250505112531.png",
-    "Pasted image 20250505003950.png",
-    "Pasted Image 20250505002928_642.png",
-    "Pasted image 20250504154931 1.png",
-    "Data Structures/Trees.md",
-    "Excalidraw/Drawing 2025-05-04 15.34.35.excalidraw.md",
-    "Pasted image 20250504154931.png",
-    "Pasted Image 20250504153450_534.png",
-    "Pasted image 20250504153402.png",
     "Excalidraw/Drawing 2025-05-04 22.08.14.excalidraw.md",
+    "Investments/Stocks & Investments.md",
+    "2-3 Trees.md",
+    "Excalidraw/Drawing 2025-05-04 15.34.35.excalidraw.md",
+    "ToDo.md",
+    "Data Structures/Binary Search Tree.md",
+    "Excalidraw/Drawing 2025-05-04 22.08.14.excalidraw.png",
+    "Data Structures/AVL Trees.md",
+    "Excalidraw/Drawing 2025-05-05 11.15.06.excalidraw.md",
+    "Pasted Image 20250506003913_401.png",
+    "Pasted image 20250506005432.png",
+    "Pasted image 20250505112531.png",
+    "Data Structures/images",
+    "Data Structures/images/Pasted image 20250505003950.png",
+    "Data Structures/images/Pasted image 20250505000717.png",
+    "Pasted Image 20250505002928_642.png",
     "Pasted Image 20250505002107_946.png",
     "Pasted Image 20250504220833_134.png",
+    "Data Structures/images/Pasted image 20250504215154.png",
+    "Excalidraw/Drawing 2025-05-05 00.28.42.excalidraw.md",
+    "Data Structures/Trees.md",
     "Untitled.canvas",
     "Data Structures/Linked Lists.md",
     "Data Structures/Arrays.md",
@@ -224,13 +253,11 @@
     "C++/C++ Basics.md",
     "C++/C++ Udemy.md",
     "C++/C++ Utils.md",
-    "ToDo.md",
     "Data Structures/The Big O notation.md",
     "Latona/Personal Notes.md",
     "Vocabulary.md",
     "TreeGraph.canvas",
     "C++/C++ Goto.md",
-    "Data Structures/Recursion.md",
     "Untitled 1.canvas",
     "C++/projects",
     "C++/images",
@@ -240,7 +267,6 @@
     "Blockchain",
     "C",
     "C++",
-    "Latona",
-    "Java"
+    "Latona"
   ]
 }

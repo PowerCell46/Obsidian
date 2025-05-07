@@ -247,28 +247,11 @@ ___
 
 ## Right Right Rotation
 
-```mermaid
-graph TD
-	25 --> 20
-	25 --> 35
-	35 --> 30
-	35 --> 40
-	40 --> 50
-	50 --> 45
-```
-
-```mermaid
-graph TD
-	25 --> 20
-	25 --> 40
-	40 --> 35
-	40 --> 50
-	35 --> 30
-	35 --> 45
-```
-
 
 ![[Pasted image 20250505000717.png]]
+
+
+![[Pasted image 20250506005432.png]]
 
 ___
 ## Right Left Rotation
