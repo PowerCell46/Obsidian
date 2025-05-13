@@ -82,7 +82,7 @@ https://d3js.org/
 Sprint (Software development)
 TSV file
 Apache JMeter - performance testing
-
+latex
 https://cartography.bg/index.php/resources-in-english/
 https://cartography.bg/wp-content/uploads/2023/08/Beyond-the-Map-Exploring-the-Boundaries-of-Communication-in-Contemporary-Cartography-Data-Visualization.pdf
 
@@ -282,4 +282,89 @@ ctrl + .  clion create variable
 
 1. Да се генерира фактура (проверка на адрес дали е същия като на логнатия юзър)
 2. Проверка на втората страница от издадената фактура.
-3. С реджи да се проверят двете правила, дали не съм изпуснал нещо.
+
+
+
+Здравейте!
+
+Във фактурата няма количеството и …
+
+Моля да регистрирате проблеми относно файловете за САП
+
+1. Имената на файловете не са както трябва
+
+Искали сме
+
+BG_invoiceNumber_data_EIC/EGN_ITN.pdf
+
+BG_ invoiceNumber_data_EIC/EGN_ITN.xml
+
+А те ни дават
+
+BG_2_20250430_200835689_BG5521900831900000000000004082332.xml
+BG_2_20250430_200835689_BG5521900831900000000000004082332.pdf
+
+<span style="color:rgb(107, 255, 174)">__2__ - номера на фактурата. Трябва да е с водещи нули ако има такива. В случая видях, че има. Така, че трябва да изглежда така __0000000002__</span>
+
+BG5521900831900000000000004082332 – ITN значи, че искаме последните 7 цифри от ТО - 4082332
+
+За xml файла
+
+<?xml version="1.0" encoding="UTF-8"?>
+
+Тук има празен ред и трябва да се махне
+
+<document>
+
+   <indexdata>
+
+       <invoiceheader>
+
+           <CLIENT value="BG"/>
+
+           <DOCUMENT_SCAN_DATE value="20250430"/>
+
+           <DOCUMENT_SCAN_TIME value="123956"/>
+
+           <BARCODE value="BG_2"/> тук трябва да е BG_0000000002
+
+           <MANDT value="300"/>
+
+           <COMPANY_CODE value="1"/> тук трябва да е 0306 тази фактура е издадена от ТСЕЕ
+
+           <PLC_EMPLOYM_CODE value=""/>
+
+           <SUPPLIER_DOC_REFERENCE value="2"/>
+
+           <DOCUMENT_DATE value="20250430"/>
+
+           <PURCHASE_ORDER_ID value=""/>
+
+           <SUPPLIER_ID value="0000010192"/>
+
+           <DOCUMENT_CURRENCY value="BGN"/>
+
+           <INVOICE_GROSS_AMOUNT_DC value="120.00"/>
+
+           <INVOICE_NET_AMOUNT_DC value="100.00"/>
+
+           <TAX_CODE value=""/>
+
+           <INVOICE_TAX_AMOUNT_DC value="20.00"/>
+
+           <CREATED_BY_USER value=""/>
+
+           <ENERGY_QUANTITY value=""/> -за ТСЕЕ общо количество енергия в MWH. За ЕС ИТН(последните 7 цифри от ЕВН ТО). И в двата случая формата е 0.000. Не виждам количеството във фактурата
+
+           <ESIGN_NAME value=""/>
+
+       </invoiceheader>
+
+   </indexdata>
+
+</document>
+
+В прикачения файл са изискванията, които сме дали на Латона за САП
+
+
+selfInvoicingLineIdCode

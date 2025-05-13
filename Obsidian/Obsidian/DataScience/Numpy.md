@@ -51,6 +51,7 @@ np.unique(x)
 linear_arr = np.arange(1, 10, 2)
 #  Start, End, Step -> 
 #  array([1, 3, 5, 7, 9])
+array = np.array(range(1, 100, 1))
 
 random_int_arr = np.random.randint(0, 10, size=(3, 5))
 %% [

@@ -97,6 +97,7 @@ void generate01Vectors(const int& number) {
                 *(array + incIndex) += 1;  
         }    
 	}  
+	
     delete[] array;  
 }
 ```
@@ -108,5 +109,38 @@ std::string reverseString(const std::string& str, const int& index = 0) {
     if (index < str.size())  
         return reverseString(str, index + 1) + str.at(index);  
     return "";  
+}
+```
+
+## Fibonacci Implementation using Memorization
+
+```cpp
+int fibonacciImpl(const int& number, int* memorizationArray) {
+    if (number <= 1) {
+        if (*(memorizationArray + number) == -1)
+            *(memorizationArray + number) = number;
+        return number;
+    }
+
+    if (*(memorizationArray + number - 1) == -1)
+        *(memorizationArray + number - 1) = fibonacciImpl(number - 1, memorizationArray);
+
+    if (*(memorizationArray + number - 2) == -1)
+        *(memorizationArray + number - 2) = fibonacciImpl(number - 2, memorizationArray);
+
+    return *(memorizationArray + number - 1) + *(memorizationArray + number - 2);
+}
+
+int fibonacci(const int& number) {
+    // Create an array keeping the results of previous calls
+    int* memorizationArray = new int[number]{};
+    for (int i = 0; i < number; ++i)
+        *(memorizationArray + i) = -1;
+
+    const int result = fibonacciImpl(number, memorizationArray);
+
+    delete[] memorizationArray;
+
+    return result;
 }
 ```

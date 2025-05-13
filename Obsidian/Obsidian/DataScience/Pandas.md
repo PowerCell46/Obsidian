@@ -4,6 +4,9 @@ Table (Dataframe)
 - May have many dimensions
 - usually call this dataset
 
+Dataframe: Columns, Rows, Data
+Series: One-dimensional ndarray with axis labels 
+
 List (Series)
 - One-dimensional
 - usually represents a column of a table
@@ -27,17 +30,37 @@ print(car_sales.head())
 # Last Five Entrances  
 print(car_sales.tail())
 
+print(car_sales.sample(5)) # Five Random Entries
 
 animals = pd.Series(['cat', 'dog', 'snake', 'bird', 'panda', 'human'], index=[0, 3, 9, 8, 3, 2])  
-  
+
+pokemonData.loc["Eevee"] # Single []: RETURNS SERIES
+pokemonData.loc[["Eevee"]] # DOUBLE [[]]: RETURNS DATAFRAME
+
+eevolutions = [
+    "Eevee",
+    "Jolteon",
+    "Flareon",
+    "Vaporeon",
+    "Umbreon",
+    "Espeon",
+    "Glaceon",
+    "Leafeon",
+    "Sylveon"
+]
+
+pokemonData.loc[eevolutions]
+
 # Returns the index and the position of the given number  
-print(animals.loc[3])  
+print(pokemonData.loc["Mewtwo"]) # Location
+
+kantoKings = pokemonData.loc[143:151][["name", "attack", "defense", "hp"]]
   
 # Returns only the position of the given number  
-print(animals.iloc[3])
+pokemonData.iloc[[24]] # Pikachu: Index Location
 ```
 
-## Data Selection (similar to SQL Queries)
+## Data Selection (Similar to SQL Queries)
 
 ```python
 print(car_sales[car_sales['Make'] == 'Toyota'])  
@@ -46,12 +69,124 @@ print(car_sales[car_sales['Doors'] > 3])
 
 # Returns DataFrame - Like a SELECT query, specifying the columns  
 print(accidents[['Miles from Home', '% of Accidents']])
+
+
+legendaries = pokemonData[pokemonData["is_legendary"] == 1][["name", "japanese_name", "attack", "defense", "hp"]]
+
+
+# Generation == 1 OR generation == 4
+pokedex = pokedex[(pokedex.generation == 1) | (pokedex.generation == 4)]
+
+bestStatsPokemon = pokedex[
+    (pokedex["attack"] == pokedex["attack"].max()) |
+    (pokedex["defense"] == pokedex["defense"].max()) |
+    (pokedex["hp"] == pokedex["hp"].max())
+]
+
+
+# Water type AND legendary AND is from generation 3
+pokedex[
+	(pokedex["type1"] == "water") & 
+	(pokedex["is_legendary"] == 1) & 
+	(pokedex["generation"] == 3)
+]
+
+
+# Either defense < 100 Either Attack > 100, BUT NOT BOTH(defense < 100 AND attack > 100)
+pokedex[(pokedex["defense"] < 100) ^ (pokedex["attack"] > 100)]
+
+# bitwise NOT: The reverse result
+pokedex[~(pokedex["attack"] >= 100)]
+
+
+pokedex[pokedex["attack"].between(50, 100)]
+
+favouriteLegendaries = [
+    "Moltres",
+    "Mewtwo",
+    "Rayquaza",
+    "Groudon",
+    "Kyogre",
+    "Palkia",
+    "Dialga"
+]
+
+pokedex[pokedex["name"].isin(favouriteLegendaries)]
+
+# Getting all entries with type2 == NaN
+singleTypePokemon = pokedex[pokedex["type2"].isna()]
+```
+
+## Sorting 
+
+```python
+bitcoinData = pd.read_csv("../csvData/BTC-USD.csv", index_col = 0)
+
+# Sort in ASC order by the Open column
+bitcoinData = bitcoinData.sort_values("Open", ascending=True)
+
+# Sort in DESC order by Volume and then by High column
+bitcoinData = bitcoinData.sort_values(["Volume", "High"], ascending=False)
+
+# Sort String cols by lowercasing them with a lambda function
+pokemonData = pokemonData.sort_values("name", ascending=True, key=lambda col: col.str.lower())
+
+
+pokemonData = pd.read_csv("../csvData/AllPokemon.csv", index_col=30)  
+
+# Sort by the index 
+pokemonData = pokemonData.sort_index(key=lambda col : col.str.lower())
+```
+
+## Adding and Removing Columns
+
+```python
+# Delete a column
+bitcoinData.drop(columns=["Adj Close"], inplace=True)
+
+# Delete a row (by its index)
+bitcoinData.drop(labels=[1], axis=0, inplace=True)
+
+# Drop rows by slicing by order
+bitcoinData.drop(bitcoinData.index[0:3], inplace=True)
+
+
+# Create new column at the end
+bitcoinData["Change"] = bitcoinData["Close"] - bitcoinData["Open"]
+
+# Create new column at a given position
+bitcoinData.insert(1, "Change", bitcoinData["Close"] - bitcoinData["Open"])
+
+bitcoinData.insert(2, "Change %", (bitcoinData["Change"] / (bitcoinData["Open"] / 100)))
 ```
 
 ## Changing the column values
 
 ```python
-# Castign a string value to a number
+# Renaming a column
+pokedex.rename(columns={
+    "pokedex_number": "pokedex number",
+    "japanese_name": "japanese name",
+    "sp_attack": "special attack",
+    "sp_defense": "special defense",
+    },
+    inplace=True
+)
+
+# Replacing a column value with another one
+pokedex["is_legendary"].replace(0, -1, inplace=True)
+# Replacing multiple values at one go
+pokedex["is_legendary"].replace([0, 1], ["False", "True"], inplace=True)
+# Replacing a value with None
+pokedex["is_legendary"].replace([0], [None], inplace=True)
+
+# Incrementing by 10 attack, defense and hp
+pokedex.loc[["Charizard", "Venusaur", "Blastoise"], ["attack", "defense", "hp"]] += 10
+
+# Updating defense to be increased by the attack, if defense is <= 50
+pokedex.loc[pokedex["defense"] <= 50, "defense"] += pokedex[pokedex["defense"] <= 50]["attack"]
+
+# Casting a string value to a number
 car_sales['Price'] = car_sales['Price'].str.replace(r'[\$,]', '', regex=True).astype(float).astype(int)
 
 # Not actually changing the column
@@ -102,9 +237,13 @@ users = pd.read_json(url)
 ## Dataframe properties
 
 ```python
-print(car_sales.dtypes)  
+print(car_sales.dtypes)
+
+print(car_sales.info())
   
 car_columns = car_sales.columns  
+
+bitcoinData[["Open", "Close", "High", "Low", "Volume"]].corr()
   
 print(car_sales.index)
 
@@ -128,7 +267,7 @@ print(car_sales.sum())
 
 print(car_sales['Doors'].sum())
 
-print(len(car_sales))
+print(len(car_sales)) # car_sales.shape
 
 # Calculates the average values for all numeric columns within each group
 numeric_columns = car_sales.select_dtypes(include=['number']).columns  
@@ -140,6 +279,22 @@ print(grouped_means)
 shuffled_car_sales = (car_sales.sample(frac=1))  
   
 print(shuffled_car_sales.reset_index(inplace=False, drop=True))
+
+pokemonData["Exp_Points"].max()
+
+pokemonData["Exp_Points"].min()
+
+pokemonData["Exp_Points"].sum()
+
+pokemonData["Exp_Points"].median()
+
+pokemonData["Height(m)"].count()
+
+pokemonData["Male_Pct"].value_counts() # Show the distribution of values as count
+
+pokemonData["Exp_Points"].describe() # Show all of the above (+ a few more)
+
+allPokemonData.describe(include=["object"]) # Descriptive stats for objects
 ```
 
 ## Dealing with missing data
@@ -252,4 +407,182 @@ matrix = np.transpose(matrix)
 # ]  
   
 print(matrix)
+```
+
+## Series Methods
+
+```python
+import pandas as pd
+
+allPokemonData = pd.read_csv("../AllPokemon.csv")
+
+allPokemonData.abilities.dtype # Method for a Series
+
+allPokemonData.type1.unique() # Unique Values
+
+allPokemonData.type1.nunique() # Number of Unique
+
+pokemonData.nlargest(5, columns=["attack", "weight_kg"]) # Top 5 pokemon with largest attack, then ordered by weight
+
+pokemonData.nsmallest(5, columns=["defense", "hp"]) # Top 5 pokemon with smallest defense, then ordered by hp
+```
+
+## Indexes
+
+```python
+bitcoinData = pd.read_csv("../csvData/BTC-USD.csv", index_col = 0)
+
+bitcoinData.set_index("Date")
+
+```
+
+----
+
+```python
+import pandas as pd
+
+  
+
+spotify2024Data = pd.read_csv("../Most Streamed Spotify Songs 2024.csv", encoding="latin1")
+
+  
+
+# spotify2024Data[["Track", "Artist", "Album Name", "Spotify Streams", "Release Date", "Explicit Track"]].head(100) # First 100 entries
+
+meaningfullSpotifyData = spotify2024Data[["Track", "Artist", "Album Name", "Spotify Streams", "Release Date", "Explicit Track"]]
+
+meaningfullSpotifyData = meaningfullSpotifyData.rename(columns={"Track": "Track Name", "Artist": "Artist Name", "Explicit Track": "Is Track Explicit"})
+
+  
+
+import matplotlib.pyplot as plt
+
+  
+
+# spotify2024Data.shape
+
+# spotify2024Data.columns
+
+# spotify2024Data.dtypes # Types of each col
+
+  
+
+# spotify2024Data["Artist"].unique() # Unique col entries
+
+  
+
+spotify2024Data["Track"] = spotify2024Data["Track"].astype("string") # Cast the Track col to String
+
+  
+
+# spotify2024Data["Track"].str.isnumeric() # returns Bool column
+
+# spotify2024Data[spotify2024Data["Track"].str.isnumeric()] # Filter the entries by that query
+
+# spotify2024Data["Track"].str.isnumeric().value_counts() # returns count of true and count of false
+
+  
+
+spotify2024Data["Artist"] = spotify2024Data["Artist"].astype("string")
+
+  
+
+artist_counts = spotify2024Data["Artist"].value_counts().head(25)
+
+  
+
+plt.figure(figsize=(12, 6))
+
+plt.bar(artist_counts.index, artist_counts.values)
+
+plt.yticks(range(0, 70, 5))
+
+plt.xlabel("Artist Name")
+
+plt.ylabel("Top Songs Count")
+
+plt.grid()
+
+plt.title("Top 25 Artists by Number of Songs")
+
+plt.xticks(rotation=45, ha="right")
+
+plt.tight_layout()
+
+plt.show()
+```
+
+
+```python
+import pandas as pd
+
+  
+
+spotify2024Data = pd.read_csv("../Most Streamed Spotify Songs 2024.csv", encoding="latin1")
+
+  
+
+# spotify2024Data[["Track", "Artist", "Album Name", "Spotify Streams", "Release Date", "Explicit Track"]].head(100) # First 100 entries
+
+meaningfullSpotifyData = spotify2024Data[["Track", "Artist", "Album Name", "Spotify Streams", "Release Date", "Explicit Track"]]
+
+meaningfullSpotifyData = meaningfullSpotifyData.rename(columns={"Track": "Track Name", "Artist": "Artist Name", "Explicit Track": "Is Track Explicit"})
+
+  
+
+import matplotlib.pyplot as plt
+
+  
+
+# spotify2024Data.shape
+
+# spotify2024Data.columns
+
+# spotify2024Data.dtypes # Types of each col
+
+  
+
+# spotify2024Data["Artist"].unique() # Unique col entries
+
+  
+
+spotify2024Data["Track"] = spotify2024Data["Track"].astype("string") # Cast the Track col to String
+
+  
+
+# spotify2024Data["Track"].str.isnumeric() # returns Bool column
+
+# spotify2024Data[spotify2024Data["Track"].str.isnumeric()] # Filter the entries by that query
+
+# spotify2024Data["Track"].str.isnumeric().value_counts() # returns count of true and count of false
+
+  
+
+spotify2024Data["Artist"] = spotify2024Data["Artist"].astype("string")
+
+  
+
+artist_counts = spotify2024Data["Artist"].value_counts().head(25)
+
+  
+
+plt.figure(figsize=(12, 6))
+
+plt.bar(artist_counts.index, artist_counts.values)
+
+plt.yticks(range(0, 70, 5))
+
+plt.xlabel("Artist Name")
+
+plt.ylabel("Top Songs Count")
+
+plt.grid()
+
+plt.title("Top 25 Artists by Number of Songs")
+
+plt.xticks(rotation=45, ha="right")
+
+plt.tight_layout()
+
+plt.show()
 ```

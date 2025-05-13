@@ -85,7 +85,7 @@ else:
 ```
 
 ## Pandas melt
-	
+
 ```python
 data_tidy = data.melt(
 
