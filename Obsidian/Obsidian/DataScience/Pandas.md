@@ -115,6 +115,9 @@ pokedex[pokedex["name"].isin(favouriteLegendaries)]
 
 # Getting all entries with type2 == NaN
 singleTypePokemon = pokedex[pokedex["type2"].isna()]
+
+# Getting all entries with type2 == NaN
+pokedex[pokedex["type2"].isna()]
 ```
 
 ## Sorting 
@@ -186,14 +189,14 @@ pokedex.loc[["Charizard", "Venusaur", "Blastoise"], ["attack", "defense", "hp"]]
 # Updating defense to be increased by the attack, if defense is <= 50
 pokedex.loc[pokedex["defense"] <= 50, "defense"] += pokedex[pokedex["defense"] <= 50]["attack"]
 
-# Casting a string value to a number
-car_sales['Price'] = car_sales['Price'].str.replace(r'[\$,]', '', regex=True).astype(float).astype(int)
+# Type casting attack from int to float
+pokedex["attack"] = pokedex["attack"].astype("float32")
+
+# 'category': ENUM (saves space, safer)
+pokedex["is_legendary"] = pokedex["is_legendary"].astype("category")
 
 # Not actually changing the column
 print(car_sales['Make'].str.lower())
-
-# Deleting a column
-car_sales.drop('Total fuel Used (L)', axis=1, inplace=True)
 
 # Apply functions (either python either numpy)  
 car_sales['Odometer (KM)'] = car_sales['Odometer (KM)'].apply(lambda x: x / 1.6)
@@ -204,16 +207,23 @@ car_sales['Total Fuel Used (L)'] = car_sales['Odometer (KM)'] / 100 * car_sales[
 # Create a column by a single value / Default 
 car_sales['Number of wheels'] = 4
 
-seats_column = pd.Series([5, 5, 5, 5, 5])  
-# Adding a new Column with a DataFrame
-car_sales['Seats'] = seats_column  
-  
-car_sales['Seats'].fillna(5, inplace=True)
+# Drop all entries with type2 == NaN
+pokedex.dropna(subset=["type2"], inplace=True)
 
-# Creating a new column from a Python List  
-fuel_economy = [7.6, 3, 5, 123, 1, 2, 3, 4, 12, 4]  
-  
-car_sales['Fuel per 100KM'] = fuel_economy
+# Drop all entries with ANY NaN value
+pokedex.dropna(inplace=True)
+
+# Drop all entries where the WHOLE ROW is empty
+pokedex.dropna(how="all", inplace=True)
+
+# Set default value for NaN value of a column
+pokedex["type2"] = pokedex["type2"].fillna("None")
+
+# Use a dictionary to specify default value for each column
+pokedex = pokedex.fillna({"type2": "None", "percentage_male": -1})
+
+# Fill the missing values with another column's values
+sales["shipping_zip"].fillna(sales["billing_zip"])
 ```
 
 ## Reading files
@@ -313,6 +323,138 @@ car_sales_missing_data['Odometer'].fillna(car_sales_missing_data['Odometer'].mea
 
 # Drop the empty data  
 car_sales_missing_data.dropna(inplace=True)
+```
+
+## Working with Dates
+
+```python
+# Directly specify which cols to be parsed to dates
+bitcoinData = pd.read_csv("../csvData/BTC-USD.csv", parse_dates=["Date"])
+
+bitcoinData["Date"] = pd.to_datetime(bitcoinData["Date"])
+
+# Specifying the format (Check the documentation for the syntax)
+bitcoinData["Date"] = pd.to_datetime(bitcoinData["Date"], format="%Y-%m-%d")
+
+bitcoinData["Date"].dt.year
+bitcoinData["Date"].dt.month
+bitcoinData["Date"].dt.day
+bitcoinData["Date"].dt.dayofweek
+bitcoinData["Date"].dt.hour
+
+# Filtering by year month day
+bitcoinData[
+        (bitcoinData["Date"].dt.year == 2021) &
+        (bitcoinData["Date"].dt.month == 6) &
+        (bitcoinData["Date"].dt.day == 29)
+    ]
+
+bitcoinData = bitcoinData[
+    (bitcoinData["Date"].dt.year > 2020) |
+    ((bitcoinData["Date"].dt.month == 6) & (bitcoinData["Date"].dt.day == 29))
+]
+
+# Filtering date between years
+bitcoinData = bitcoinData[bitcoinData["Date"].dt.year.between(2019, 2020)]
+```
+
+## Working with Strings
+
+```python
+# Removing last chars of a string
+pokedex["classification"] = pokedex["classification"].str[:-8]
+# Leaving only the last chars
+pokedex["classification"] = pokedex["classification"].str[-8:]
+
+# Leaving only the first chars
+pokedex["classification"] = pokedex["classification"].str[:8]
+# Removing first chars of a string
+pokedex["classification"] = pokedex["classification"].str[:8]
+
+# Upper, Lower and Capitalize methods
+pokedex["classification"] = pokedex["classification"].str.upper()
+pokedex["classification"] = pokedex["classification"].str.lower()
+pokedex["classification"] = pokedex["classification"].str.capitalize()
+
+# Strip (lstrip, rstrip)
+pokedex["classification"] = pokedex["classification"].str.strip()
+
+# Split
+pokedex["pokemon"] = pokedex["classification"].str.split(" ", expand=True)[1]
+pokedex["classification"] = pokedex["classification"].str.split(" ", expand=True)[0]
+
+# Replace
+pokedex["classification"] = pokedex["classification"].str.replace(" Pokémon", "")
+
+# Filter by checking if a str contains()
+pokedex[pokedex["classification"].str.contains("Seed")]
+```
+
+## Aggregation Functions
+
+```python
+pokedex.groupby("generation")["name"].count()
+
+aggregate = pokedex.groupby("type1")
+aggregate.ngroups # Number of groups
+aggregate.groups # Dictinonary of the group key and the indices of the values as a list
+
+# Iterating through the grouping
+for key in pokedex.groupby("generation").groups:
+    currentBufferLst = []
+    for val in pokedex.groupby("generation").groups[key]:
+        currentBufferLst.append(val)
+
+    pokemonNames = [pokedex.loc[index]["name"] for index in currentBufferLst]
+    resultNames = ", ".join(pokemonNames)
+    print(f"Generation {key}: {resultNames}")
+
+typeGroup.first() # Show the first entry
+typeGroup.get_group("dragon") # Get a particular group
+
+
+# Using agg
+pokedex.groupby("generation")["sp_attack"].agg(["min", "max" ])
+
+# Multiple columns, specifying what you want for each one
+pokedex.groupby("generation")[["attack", "defense", "hp"]].agg({"attack": ["min", "max"], "defense": ["min", "max", "mean", "median"], "hp": ["min", "max", "mean", "median"]})
+
+# Defining and using a custom function
+def diffRange(s):
+    return s.max() - s.min()
+
+pokedex.groupby("type1")["attack"].agg(["min", "max", diffRange])
+```
+
+## Apply & Map
+
+```python
+# Override the values
+pokedex["attack"] = pokedex["attack"].apply(lambda attk: attk + avgAttack)
+
+# Create a new col with the new results
+pokedex["attack_category"] = pokedex["attack"].apply(defineStrength)
+
+def defineStrength(attack, defense, hp):
+    statSum = attack + defense + hp
+    return "Strong" if statSum > 250 else ("Medium" if statSum > 150 else "Weak")
+
+# Using the values from all rows
+pokedex["attack_category"] = pokedex.apply(lambda row: defineStrength(row["attack"], row["defense"], row["hp"]), axis=1)
+
+generationNames = {
+    1: "Kanto",
+    2: "Johto",
+    3: "Hoenn",
+    4: "Sinnoh",
+    5: "Unova",
+    6: "Kalos",
+    7: "Alola",
+    8: "Galar"
+}
+# Mapping values
+pokedex["generation"] = pokedex["generation"].map(generationNames)
+pokedex["generation"] = pokedex["generation"].map(lambda gen: "Generation " + str(gen))
 ```
 
 ## Multiplying Matrices
@@ -436,153 +578,4 @@ bitcoinData.set_index("Date")
 
 ```
 
-----
-
-```python
-import pandas as pd
-
-  
-
-spotify2024Data = pd.read_csv("../Most Streamed Spotify Songs 2024.csv", encoding="latin1")
-
-  
-
-# spotify2024Data[["Track", "Artist", "Album Name", "Spotify Streams", "Release Date", "Explicit Track"]].head(100) # First 100 entries
-
-meaningfullSpotifyData = spotify2024Data[["Track", "Artist", "Album Name", "Spotify Streams", "Release Date", "Explicit Track"]]
-
-meaningfullSpotifyData = meaningfullSpotifyData.rename(columns={"Track": "Track Name", "Artist": "Artist Name", "Explicit Track": "Is Track Explicit"})
-
-  
-
-import matplotlib.pyplot as plt
-
-  
-
-# spotify2024Data.shape
-
-# spotify2024Data.columns
-
-# spotify2024Data.dtypes # Types of each col
-
-  
-
-# spotify2024Data["Artist"].unique() # Unique col entries
-
-  
-
-spotify2024Data["Track"] = spotify2024Data["Track"].astype("string") # Cast the Track col to String
-
-  
-
-# spotify2024Data["Track"].str.isnumeric() # returns Bool column
-
-# spotify2024Data[spotify2024Data["Track"].str.isnumeric()] # Filter the entries by that query
-
-# spotify2024Data["Track"].str.isnumeric().value_counts() # returns count of true and count of false
-
-  
-
-spotify2024Data["Artist"] = spotify2024Data["Artist"].astype("string")
-
-  
-
-artist_counts = spotify2024Data["Artist"].value_counts().head(25)
-
-  
-
-plt.figure(figsize=(12, 6))
-
-plt.bar(artist_counts.index, artist_counts.values)
-
-plt.yticks(range(0, 70, 5))
-
-plt.xlabel("Artist Name")
-
-plt.ylabel("Top Songs Count")
-
-plt.grid()
-
-plt.title("Top 25 Artists by Number of Songs")
-
-plt.xticks(rotation=45, ha="right")
-
 plt.tight_layout()
-
-plt.show()
-```
-
-
-```python
-import pandas as pd
-
-  
-
-spotify2024Data = pd.read_csv("../Most Streamed Spotify Songs 2024.csv", encoding="latin1")
-
-  
-
-# spotify2024Data[["Track", "Artist", "Album Name", "Spotify Streams", "Release Date", "Explicit Track"]].head(100) # First 100 entries
-
-meaningfullSpotifyData = spotify2024Data[["Track", "Artist", "Album Name", "Spotify Streams", "Release Date", "Explicit Track"]]
-
-meaningfullSpotifyData = meaningfullSpotifyData.rename(columns={"Track": "Track Name", "Artist": "Artist Name", "Explicit Track": "Is Track Explicit"})
-
-  
-
-import matplotlib.pyplot as plt
-
-  
-
-# spotify2024Data.shape
-
-# spotify2024Data.columns
-
-# spotify2024Data.dtypes # Types of each col
-
-  
-
-# spotify2024Data["Artist"].unique() # Unique col entries
-
-  
-
-spotify2024Data["Track"] = spotify2024Data["Track"].astype("string") # Cast the Track col to String
-
-  
-
-# spotify2024Data["Track"].str.isnumeric() # returns Bool column
-
-# spotify2024Data[spotify2024Data["Track"].str.isnumeric()] # Filter the entries by that query
-
-# spotify2024Data["Track"].str.isnumeric().value_counts() # returns count of true and count of false
-
-  
-
-spotify2024Data["Artist"] = spotify2024Data["Artist"].astype("string")
-
-  
-
-artist_counts = spotify2024Data["Artist"].value_counts().head(25)
-
-  
-
-plt.figure(figsize=(12, 6))
-
-plt.bar(artist_counts.index, artist_counts.values)
-
-plt.yticks(range(0, 70, 5))
-
-plt.xlabel("Artist Name")
-
-plt.ylabel("Top Songs Count")
-
-plt.grid()
-
-plt.title("Top 25 Artists by Number of Songs")
-
-plt.xticks(rotation=45, ha="right")
-
-plt.tight_layout()
-
-plt.show()
-```

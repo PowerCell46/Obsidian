@@ -29,3 +29,9 @@ Pay Tax on Net
 
 global depository receipts
 
+
+## Buy
+
+**Omnicom**
+**Trade Desk**
+Digital ocean ???
