@@ -137,13 +137,15 @@ OLTP databases
 Hadoop
 Аctive directory
 Apache Spark
-
+код на шанън
+Теорема на Шанън-Хартли
+Теория на кодирането
 hdf format
 parquet format
 Kafka
 text-overflow ellipsis
 wsl - windows subsystem for linux
-
+https://bg.wikipedia.org/wiki/%D0%93%D0%B5%D1%8F
 Защо другите езици нямат видимост на функциите ако са декларирани по-долу, а не като джава скрипт
 llvm: https://aosabook.org/en/v1/llvm.html
 https://opencv.org/
@@ -159,6 +161,7 @@ In code development, **concretion** refers to the specific implementation of an 
 - **Concretion:** `MySQLDatabase.cpp`
 https://www.geeksforgeeks.org/how-to-use-string_agg-to-concatenate-strings-in-sql-server/
 минискус
+Xhr: XMLHttpRequest
 __________________________________________________________________________
 # Books
 
@@ -199,17 +202,6 @@ https://en.cppreference.com/w/cpp/string/basic_string_view
 Ai website design:
 https://axolotl.ai/
 
-
-
-
-move the lib and header files to the project
-
-  
-// use moment() library
-
-### https://www.plus500.com/bg/
-
-
 # C++ Database Project
 
 https://chatgpt.com/share/67afcc2f-26d4-8003-989c-6c2b9b7c052f
@@ -217,12 +209,6 @@ https://chatgpt.com/share/67afcc2f-26d4-8003-989c-6c2b9b7c052f
 1. Add Where clauses (write the implementation of =, IN etc...)
 
 first solar inc
-
-
-Датите да се кастнат към стринг и тохава да се валидират и записват
-
-
-### Go through the two files and check the made changes
 
 
 single linked list
@@ -263,4 +249,14 @@ constants.js
 
 ---
 
-ctrl + .  clion create variable
+
+
+1. Ъпдейт на стейта при логин логоут и при едит на лигъл пърсън, да се извиква метода в навигейшъна, за да се ъпдейтва стойността за компанията.
+
+
+Изтриването на диапазони да се премахне
+Accounting period да се премахне изтриването
+Edit Legal Person
+- Трябва да се сложат права, а не да се скриват
+
+Или да се скрият работите на legal person-a или да се направи отделен екран за company details

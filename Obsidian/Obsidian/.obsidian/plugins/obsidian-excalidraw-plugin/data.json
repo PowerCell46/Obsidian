@@ -101,7 +101,7 @@
   "library2": {
     "type": "excalidrawlib",
     "version": 2,
-    "source": "https://github.com/zsviczian/obsidian-excalidraw-plugin/releases/tag/2.11.0",
+    "source": "https://github.com/zsviczian/obsidian-excalidraw-plugin/releases/tag/2.11.1",
     "libraryItems": [
       {
         "status": "unpublished",
@@ -6010,14 +6010,16 @@
   "mdCSS": "",
   "scriptEngineSettings": {},
   "defaultTrayMode": true,
-  "previousRelease": "2.11.0",
+  "previousRelease": "2.11.1",
   "showReleaseNotes": true,
   "showNewVersionNotification": true,
   "latexBoilerplate": "\\color{blue}",
   "latexPreambleLocation": "preamble.sty",
   "taskboneEnabled": false,
   "taskboneAPIkey": "",
-  "pinnedScripts": [],
+  "pinnedScripts": [
+    "Excalidraw/Scripts/Downloaded/Slideshow.md"
+  ],
   "customPens": [
     {
       "type": "default",

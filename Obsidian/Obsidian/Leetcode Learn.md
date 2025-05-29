@@ -1,5 +1,6 @@
 
 Two pointer sort
+
 ```c++
 class Solution {  
 public:  

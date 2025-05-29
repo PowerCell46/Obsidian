@@ -11,9 +11,6 @@ List (Series)
 - One-dimensional
 - usually represents a column of a table
 
-pd concat
-pd merge
-
 ```python
 # One dimensional  
 series = pd.Series(['BMW', 'Toyota', 'Mazda'])  
@@ -58,6 +55,24 @@ kantoKings = pokemonData.loc[143:151][["name", "attack", "defense", "hp"]]
   
 # Returns only the position of the given number  
 pokemonData.iloc[[24]] # Pikachu: Index Location
+
+colNames = ["name", "attack", "defense", "hp", "description", "type1", "type2"]
+
+# Provide column names (in case they are missing)
+pokemonData = pd.read_csv("../data/pokedex.csv", names=colNames)
+
+# Ask Jupiter notebook for information
+pd?
+pd.read_csv?
+```
+
+## Show all table entries
+
+```python
+# Set it
+pd.set_option("display.max_rows", None)
+# Reset it
+pd.reset_option("display.max_rows")
 ```
 
 ## Data Selection (Similar to SQL Queries)
@@ -120,7 +135,7 @@ singleTypePokemon = pokedex[pokedex["type2"].isna()]
 pokedex[pokedex["type2"].isna()]
 ```
 
-## Sorting 
+## Sorting
 
 ```python
 bitcoinData = pd.read_csv("../csvData/BTC-USD.csv", index_col = 0)
@@ -134,6 +149,10 @@ bitcoinData = bitcoinData.sort_values(["Volume", "High"], ascending=False)
 # Sort String cols by lowercasing them with a lambda function
 pokemonData = pokemonData.sort_values("name", ascending=True, key=lambda col: col.str.lower())
 
+# Sort first by Artist ASC, then Rank DESC
+spotify[
+	spotify["Artist"].isin(["Drake", "Post Malone", "Travis Scott", "Ariana Grande"])
+].sort_values(["Artist", "All Time Rank"], ascending=[True, False])
 
 pokemonData = pd.read_csv("../csvData/AllPokemon.csv", index_col=30)  
 
@@ -175,6 +194,13 @@ pokedex.rename(columns={
     },
     inplace=True
 )
+
+# Change index of an entry:
+row = netflix[netflix.title == "Evil"]
+# Detach it from the dataset
+netflix.drop(row.index, inplace=True)
+# Attach it back with the new index
+netflix.loc["s6666"] = row.iloc[0]
 
 # Replacing a column value with another one
 pokedex["is_legendary"].replace(0, -1, inplace=True)
@@ -290,6 +316,8 @@ shuffled_car_sales = (car_sales.sample(frac=1))
   
 print(shuffled_car_sales.reset_index(inplace=False, drop=True))
 
+pokedex["generation"].mode().values # Most common value/s ([1]) / ([1, 2, 3])
+
 pokemonData["Exp_Points"].max()
 
 pokemonData["Exp_Points"].min()
@@ -311,7 +339,10 @@ allPokemonData.describe(include=["object"]) # Descriptive stats for objects
 
 ```python
 car_sales_missing_data = pd.read_csv('car-sales-missing-data.csv')  
-   
+
+# Find columns with NaN values
+pokemonData.columns[pokemonData.isna().any()]
+
 # Fill the missing data with the mean value  
 car_sales_missing_data['Odometer'].fillna(car_sales_missing_data['Odometer'].mean())
 
@@ -424,6 +455,53 @@ def diffRange(s):
     return s.max() - s.min()
 
 pokedex.groupby("type1")["attack"].agg(["min", "max", diffRange])
+
+# Group by generation, show min max mean for all attk def hp
+pokedex\
+	.groupby(["generation"])[["attack", "defense", "hp"]]\
+	.agg(["min", "max", "mean"])
+
+# Group by multiple columns
+pokedex.groupby(["generation", "type1"])["attack"].describe()
+```
+
+## Multi-Indexing
+
+```python
+pokedex.set_index(["generation", "name"], inplace=True)
+
+pokedex.loc[1, "Moltres"]
+pokedex.loc[4, "Garchomp"]
+pokedex.loc[6, "Greninja"]
+
+pokedex.set_index(["generation", "pokedex_number"], inplace=True)
+
+pokedex.loc[4, 409] # Access Gen 4, pokedex number 409
+
+pokedex.loc[(4, 409):(5, 530)] # Get all entries between these two
+
+pokedex.loc[:, 720, :] # Search only by the second part of the index
+pokedex.xs(357, level="pokedex_number")
+
+pokedex.index.levels
+pokedex.index.get_level_values(0) # Array of the first indices
+pokedex.index.get_level_values(1) # Array of the second indices
+
+df = pokedex\
+    .groupby("classification")\
+    .agg({
+        "pokedex_number": ["count"],
+        "attack": ["min", "max", "mean"],
+        "defense": ["min", "max", "mean"]
+    })
+    
+df[("attack", "mean")]
+
+ 
+pokedex.groupby(["generation", "is_legendary"])["attack"]\
+    .mean()\
+    .unstack()\
+    .plot(kind="bar")
 ```
 
 ## Apply & Map
@@ -455,6 +533,49 @@ generationNames = {
 # Mapping values
 pokedex["generation"] = pokedex["generation"].map(generationNames)
 pokedex["generation"] = pokedex["generation"].map(lambda gen: "Generation " + str(gen))
+```
+
+## Concatenating & Merging
+
+```python
+series1 = pd.Series(["Ivan", "Peter", "Kristian", "Stilian"])
+series2 = pd.Series(["Pavel", "Bogdan", "Ilian", "Gabi"])
+
+# Returns a new series [a1, ..., b1, ...]
+pd.concat([series1, series2]).reset_index(drop=True)
+pd.concat([series2, series1]).reset_index(drop=True)
+
+# Returns a dataframe [[a1, ...], [b1, ...]]
+pd.concat([series1, series2], axis=1)
+
+# Joins by index
+people = pd.Series(
+    data=["Ivan", "Peter", "Kristian", "Stilian", "Gabi"],
+    index=["a", "b", "c", "d", "e"]
+)
+
+benchPressPrs = pd.Series(
+    data=[100, 137.5, 100, 130],
+    index=["a", "b", "c", "d"]
+)
+
+pd.concat([people, benchPressPrs], axis=1, join="inner")
+pd.concat([people, benchPressPrs], axis=1, join="outer")
+
+# Combine two dataframes with the same columns (data sep in multiple files)
+pd.concat([pok1, pok2]).reset_index(drop=True)
+
+
+generations = pd.DataFrame({
+    "generation": [num + 1 for num in range(8)], 
+    "generation_name": ["Kanto", "Johto", "Hoenn", "Sinnoh", "Unova", "Kalos", "Alola", "Galar"]}
+)
+
+# Join by a common column (DB style join)
+pokedex.merge(generations, how="left").sample(2)
+
+# Specify join col, put suffices on same col names
+pokedex.merge(generations, how="right", on="generation", suffixes=["_pokemon", "_generation"])
 ```
 
 ## Multiplying Matrices

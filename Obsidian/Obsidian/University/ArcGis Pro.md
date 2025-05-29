@@ -111,6 +111,13 @@ Select multiple layers -> right click -> group
 # Edit Attributes
 Edit tab - Next to select - attributes
 
+## Insert an image
+1. Add Data
+2. Imagery: georeference
+3. (Fit to display)
+4. (Add control points)
+
+___
 
 ## Navy blue - Border Colour
 # #003366 
@@ -122,3 +129,14 @@ Grey - Zero Value Colour
 Dark Green - Border
 008F20
 
+
+Colours for polygons
+## 008080
+
+
+nice country border colour: 4682B4
+`#4169E1` (Royal Blue)
+
+## 2CA02C
+
+![[Pasted image 20250529235342.png]]

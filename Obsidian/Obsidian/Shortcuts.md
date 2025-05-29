@@ -53,3 +53,6 @@ https://www.jetbrains.com/help/clion/creating-and-editing-live-templates.html
 5. document.body.appendChild(anchor);
 6. anchor.click();
 7. document.body.removeChild(anchor);
+
+## Create Clion variable
+ctrl + .

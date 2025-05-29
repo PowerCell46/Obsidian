@@ -1,5 +1,6 @@
 ## Global Information Tracker
-
+Source control system 
+- SVN/Централизираност: Историята се съхранява само на сървъра; Ако този сървър приключи, губим всичко)
 
 # <span style="color:rgb(107, 255, 174)">Clone a Repo</span>
 ## 1. Navigate to a (Parent Folder)
