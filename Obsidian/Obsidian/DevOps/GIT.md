@@ -2,7 +2,30 @@
 Source control system 
 - SVN/Централизираност: Историята се съхранява само на сървъра; Ако този сървър приключи, губим всичко)
 
+### `git log -a`: show all commits
+
+### `git restore fileName|.`: Discard Changes VS code
+not staged or commited
+
+### `git restore --staged fileName|.`: Discard Changes VS code
+only staged not commited
+
+```shell
+
+```
+
+---
+### Naming of a branch on a particular task
+##### feature/idOfTheTask/DesciptionOfTheTask
+
+---
+- <span style="color:rgb(107, 255, 174)">git branch -d</span> will only delete a branch if it's fully merged into its upstream branch or HEAD. If the branch isn't fully merged, Git will refuse to delete it, protecting you from losing commit history.
+
+- <span style="color:rgb(107, 255, 174)">git branch -D</span> forces the deletion of a branch, regardless of its merge status. Use this option with caution, as it can lead to lost commits and potential conflicts.
+
+____
 # <span style="color:rgb(107, 255, 174)">Clone a Repo</span>
+
 ## 1. Navigate to a (Parent Folder)
 ## 2. get the HTTPS link of the repo
 ## 3. git clone htts://github.com/....
@@ -126,3 +149,4 @@ ___
 # Remove changes from a file
 
 ##### `git restore .../.../file.ext`
+

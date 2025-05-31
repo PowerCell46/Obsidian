@@ -150,6 +150,8 @@ https://bg.wikipedia.org/wiki/%D0%93%D0%B5%D1%8F
 llvm: https://aosabook.org/en/v1/llvm.html
 https://opencv.org/
 mv hello.txt welcome.txt -> rename file
+https://www.getpaint.net/download.html
+canva
 
 да го "отворя"
 Да ви дам моето ИП  
@@ -259,4 +261,6 @@ Accounting period да се премахне изтриването
 Edit Legal Person
 - Трябва да се сложат права, а не да се скриват
 
-Или да се скрият работите на legal person-a или да се направи отделен екран за company details
+
+git revert
+three way merge
