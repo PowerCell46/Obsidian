@@ -10,10 +10,6 @@ not staged or commited
 ### `git restore --staged fileName|.`: Discard Changes VS code
 only staged not commited
 
-```shell
-
-```
-
 ---
 ### Naming of a branch on a particular task
 ##### feature/idOfTheTask/DesciptionOfTheTask
