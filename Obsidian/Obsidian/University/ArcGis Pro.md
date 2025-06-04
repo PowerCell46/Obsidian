@@ -1,10 +1,10 @@
-## Moving hand = explore
+## [[ArcGis Pro Scripts]]
 
+## Moving hand = explore
 
 ### Geoprocessing Functions
 
 1. **add xy coordinates** -> adds columns for x and y 
-
 2. **divide** -> divides a polygon
 
 ## Search for a place
@@ -33,7 +33,6 @@
 1. Select the features that you want
 2. go to the analysis tab and from the icon menu select *summary statistics*
 
-
 # Create a chart
 1. right click on the layer
 2. go to charts - bar chart
@@ -41,7 +40,6 @@
 4. numeric - select the value that you are going to calculate
 5. general - customize the name of the chart etc.
 6. axes - customise the labels etc. 
-
 
 # Exporting a map
 1. Insert -> new layout select the size and form of the exported map
@@ -57,13 +55,6 @@ Central Feature
 - Identifies the most centrally located feature in a point, line, or polygon feature class.
 
 Average Nearest Neighbour
-
-
-# To-Do
-1та задача на ГНСС линийния слой не се вижда, дали е проблем ?
-експортване и качване  + скрийншота с инструмента
-`what is the difference?`
-
 # Center an object on the screen
 1. Open map -> explore
 2. Hold the shift key and left click on the wanted item
@@ -81,12 +72,9 @@ Average Nearest Neighbour
 2. go to feature layer -> type max height
 3. next to type is field -> set the height column of the attributive table
 
-
 # Pairwise clip
 
 # Copy features
-
-
 
 # Create Features
 - select the desired layer - edit tab - create
@@ -94,7 +82,6 @@ Average Nearest Neighbour
 - after creating don't forget to save - edit tab save!
 
 # JSON to features
-
 
 # Smooth Polygon
 
@@ -117,6 +104,8 @@ Edit tab - Next to select - attributes
 3. (Fit to display)
 4. (Add control points)
 
+# https://www.naturalearthdata.com/
+#### <span style="color:rgb(107, 255, 174)">Resources</span>
 ___
 
 ## Navy blue - Border Colour
