@@ -20,6 +20,18 @@ only staged not commited
 - <span style="color:rgb(107, 255, 174)">git branch -D</span> forces the deletion of a branch, regardless of its merge status. Use this option with caution, as it can lead to lost commits and potential conflicts.
 
 ____
+### Rename a branch
+
+###### `git branch -m new-branch-name`
+
+___
+### Restore a deleted branch
+
+###### git reflog
+to find the branch's last commit
+###### git checkout -b deletedBranchName e4f5g6h (last commit hash)
+
+___
 # <span style="color:rgb(107, 255, 174)">Clone a Repo</span>
 
 ## 1. Navigate to a (Parent Folder)
@@ -37,7 +49,7 @@ git remote add origin https://gitlab.com/....git
 ## 4. Fetch the data from the remote repository
 git fetch origin
 ## 5. Checkout the existing branch from the remote (`main`)
-git checkout main
+git checkout/switch main
 ## 6. Add all files to the staging area
 git add .
 ## 7. Commit the changes with a message
@@ -80,8 +92,10 @@ __________________________________________________________________________
 # Create branch
 ## 1. git branch `branchname`
 create new branch
-## 2. git checkout `branchname`
+## 2. git checkout/switch `branchname`
 switch to the new local branch
+## <span style="color:rgb(255, 0, 0)">(1. & 2. git checkout -b branchname)</span>
+Create and directly switch to the new branch
 ## 3. git add .
 ## 4. git commit -m "message"
 ## 5. git push --set-upstream origin `branchname`
@@ -89,11 +103,11 @@ pushing the local branch to the repository
 
 __________________________________________________________________________
 # Push to another branch
-## 1. git checkout `branchname`
+## 1. git checkout/switch `branchname`
 ## 2. git add .
 ## 3. git commit -m "Message"
 ## 4. git push origin `branchname` 
-### / git push --set-upstream origin ``branchname`
+### git push --set-upstream origin ``branchname`
 Creating the new branch in the foreign repo
 
 __________________________________________________________________________
@@ -144,5 +158,4 @@ ___
 
 # Remove changes from a file
 
-##### `git restore .../.../file.ext`
-
+##### `git restore .../.../file`

@@ -4,11 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "50454e83943756af",
+        "id": "6528805b55abf303",
         "type": "tabs",
         "children": [
           {
-            "id": "e639bc8b3475a264",
+            "id": "d2ea05b19e096d7d",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -22,21 +22,20 @@
             }
           },
           {
-            "id": "67c8ece1afc31688",
+            "id": "a29ce0521bd00479",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "DevOps/GIT.md",
+                "file": "ToDo.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "GIT"
+              "title": "ToDo"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -68,7 +67,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "JetBrains",
+                "query": "todo",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -192,36 +191,36 @@
       "companion:Toggle completion": false
     }
   },
-  "active": "67c8ece1afc31688",
+  "active": "6833aab0253485c7",
   "lastOpenFiles": [
-    "University/Природна география.md",
-    "Shortcuts.md",
     "ToDo.md",
+    "University/Природна география.md",
+    "University/Количествени и статистически методи.md",
+    "University/Климатология Отговори.md",
+    "University/ГНСС.md",
+    "University/Геоморфология.md",
+    "University/ГЕОДИЗАЙН И  ЛАНДШАФТНО  ПЛАНИРАНЕ.md",
+    "University/География на населенията.md",
+    "University/Биоразнообразие.md",
+    "University/University.md",
     "University/ArcGis Pro Scripts.md",
+    "DevOps/GIT.md",
+    "Shortcuts.md",
     "AI/AI for Developers.md",
     "Latona/Santa SQL queries.md",
     "University/ArcGis Pro.md",
     "AI/Pasted image 20250604142529.png",
     "AI",
-    "DevOps/GIT.md",
     "Latona/Personal Notes.md",
     "University/images/Pasted image 20250526121905.png",
     "University/images/Pasted image 20250526121953.png",
     "University/images/Pasted image 20250529013107.png",
     "University/images/Pasted image 20250529013654.png",
     "University/images/Pasted image 20250529235342.png",
-    "University/ГЕОДИЗАЙН И  ЛАНДШАФТНО  ПЛАНИРАНЕ.md",
     "Vocabulary.md",
     "University/СУ Изпитвания.md",
     "University/Хидрология.md",
     "University/Пространствено планиране.md",
-    "University/Количествени и статистически методи.md",
-    "University/Климатология Отговори.md",
-    "University/ГНСС.md",
-    "University/Геоморфология.md",
-    "University/География на населенията.md",
-    "University/Биоразнообразие.md",
-    "University/University.md",
     "Leetcode Learn.md",
     "Leetcode.md",
     "Pasted image 20250523171903.png",

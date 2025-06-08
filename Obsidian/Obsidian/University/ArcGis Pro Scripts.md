@@ -225,7 +225,6 @@ districtsDataframe
 
 
 ----
-
 # Performing GIS inventory
 
 ```python
@@ -259,4 +258,34 @@ for gdb in geodatabases:
     for table in arcpy.ListTables():
         tablePath = arcpy.env.workspace + "\\\\" + table
         print(f'{table}: {[[f.name, f.type] for f in arcpy.ListFields(tablePath)]}')
+```
+
+### Using describe
+
+```python
+districtsPath = "C:\\Users\\HP ZBook 17 G5\\Documents\\ArcGIS\\Projects\\ArcpyUdemyCourse\\ArcpyUdemyCourse.gdb"
+
+description = arcpy.Describe(districtsPath)
+
+print(description.name)
+print(description.dataType)
+print(description.catalogPath)
+
+for child in description.children:
+    print(f"\t{child.name} is a {child.dataType} of shapeType {child.shapeType if hasattr(child, 'shapeType') else 'N/A'}")
+
+	print(f"with Extent {child.extent}\nAnd fields: ")
+    
+    for field in child.fields:
+        print(f'\t{field.name} of type {field.type}')
+```
+
+### Using da.describe
+
+```python
+describe = arcpy.da.Describe(districtsPath)
+
+print(describe["children"])
+print(describe["name"])
+print(describe["workspaceType"])
 ```
