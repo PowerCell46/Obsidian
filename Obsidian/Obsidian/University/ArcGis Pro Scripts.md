@@ -289,3 +289,57 @@ print(describe["children"])
 print(describe["name"])
 print(describe["workspaceType"])
 ```
+
+
+# Using walk
+
+```python
+workspaceFolder = "./ArcpyUdemyCourse.gdb"
+
+pathToGdbObjects = []
+
+for dirPath, dirNames, fileNames in arcpy.da.Walk(workspaceFolder):
+    # print(dirPath)
+    # print(dirNames)
+    for fileName in fileNames:
+        pathToGdbObjects.append(f'{workspaceFolder}/{fileName}')
+    # print(fileNames)
+
+with arcpy.da.SearchCursor(pathToGdbObjects[0], field_names=["Shape", "name", "type"]) as cursor:
+    print(f"Layer name: {pathToGdbObjects[0].split('/')[-1]}")
+    for row in cursor:
+        print(row)
+# [print(col.name) for col in arcpy.ListFields(pathToGdbObjects[0])]
+
+```
+
+---
+# Layout elements, map frames
+
+## Create a map frame
+
+```python
+import arcpy
+import os
+
+arcpy.env.overwriteOutput = True
+
+arpyProject = arcpy.mp.ArcGISProject("C:\\Users\\HP ZBook 17 G5\\Documents\\ArcGIS\\Projects\\ArcpyUdemyCoursePart2\\ArcpyUdemyCoursePart2.aprx")
+
+mapx = arpyProject.listMaps("Map")[0]
+
+countriesLayer = mapx.listLayers("Countries")[0]
+
+layoutObj = arpyProject.listLayouts()[0]
+
+mapFrame  = layoutObj.listElements("MAPFRAME_ELEMENT", "Map Frame")[0]
+
+mapFrame.elementWidth = layoutObj.pageWidth - 20
+mapFrame.elementHeight = mapFrame.elementWidth # Same as width: Square form
+mapFrame.elementPositionX = 10
+mapFrame.elementPositionY = layoutObj.pageHeight / 4
+
+layoutObj.exportToPDF("C:\\Users\\HP ZBook 17 G5\\Documents\\ArcGIS\\Projects\\ArcpyUdemyCoursePart2\\test.pdf")
+os.startfile("C:\\Users\\HP ZBook 17 G5\\Documents\\ArcGIS\\Projects\\ArcpyUdemyCoursePart2\\test.pdf")
+```
+

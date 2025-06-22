@@ -1,4 +1,4 @@
-# Courses
+ # Courses
 
 ## Python ORM
 1. Exam
@@ -121,7 +121,6 @@ smart pointers:
 - shared pointer    
 - unique pointer
 Задачата от сашо в Инстаграм за матриците
-C++ DB connection
 C++ records
 C++ Functors
 OCR
@@ -164,6 +163,7 @@ In code development, **concretion** refers to the specific implementation of an 
 https://www.geeksforgeeks.org/how-to-use-string_agg-to-concatenate-strings-in-sql-server/
 минискус
 Xhr: XMLHttpRequest
+Prettier React configuration .prettierrc .eslintrc.json
 __________________________________________________________________________
 # Books
 
@@ -271,14 +271,26 @@ three way merge
 При оня педал 2 курсови по двете презентации
 Втората презентация
 
-
 Priродна география 2 въпроса 40 мин
 Да се прочетат презентациите в мудъл
 
 ---
 #### Metalcore
 
-1. С чата да се направят съмаризация на останалите теми
-2. Направа на канвас с глупостите: https://docs.google.com/spreadsheets/d/1noux4UaUfAhM2BsVRqptBZ5df-5bIA01gW9de0bqp_g/htmlview
-3. Проверка на джетбрайнс акаунта, кога изтича лиценза
+1. Направа на канвас с глупостите: https://docs.google.com/spreadsheets/d/1noux4UaUfAhM2BsVRqptBZ5df-5bIA01gW9de0bqp_g/htmlview
+2. Проверка на джетбрайнс акаунта, кога изтича лиценза
 - Renew license: https://sales.jetbrains.com/hc/en-gb/articles/11564534574994-How-can-I-renew-my-free-educational-license-for-another-year
+
+---
+Ако е юни можеш да върнеш на май без да даде грешка
+
+Защо при издаване на кредитни известия няма месидж при успех?
+https://bitwarden.com/
+
+plamenp@gea.uni-sofia.bg
+kristina_petrova@gea.uni-sofia.bg
+
+[https://arcg.is/0XbbCO0](https://arcg.is/0XbbCO0)
+[https://arcg.is/1mL95D2](https://arcg.is/1mL95D2)
+
+![[Pasted image 20250621235138.png]]

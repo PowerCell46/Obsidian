@@ -32,6 +32,30 @@ to find the branch's last commit
 ###### git checkout -b deletedBranchName e4f5g6h (last commit hash)
 
 ___
+#### Push changes to a branch where the colleague has already pushed (avoiding merge conflict)
+
+1. Stage & commit all changes (-a includes tracked files only)
+`git commit -a -m "Your commit message"`
+2. Rebase your changes on top of the latest remote changes
+`git pull --rebase origin EVN_BE`
+3. Push your rebased, up-to-date branch
+`git push origin EVN_BE`
+
+___
+### Add ALL files (newly created and changed) to the commit
+
+git add -A && git commit -m "Initial commit"
+
+___
+## Merge vs Rebase
+
+![[Pasted image 20250620220259.png]]
+
+![[Pasted image 20250620223045.png]]
+
+(git push --force-with-lease)
+
+___
 # <span style="color:rgb(107, 255, 174)">Clone a Repo</span>
 
 ## 1. Navigate to a (Parent Folder)
@@ -159,3 +183,6 @@ ___
 # Remove changes from a file
 
 ##### `git restore .../.../file`
+
+
+

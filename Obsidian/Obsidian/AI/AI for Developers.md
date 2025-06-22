@@ -17,7 +17,7 @@ ___
 
 ### Use this method to separate parts of the prompt
 
-```script
+```xml
 <context>
 	...
 </context>
@@ -27,10 +27,24 @@ ___
 </role>
 
 <whoAmI>
-	...
+	... (ask it to summarize your cv)
 </whoAmI>
 
 <action>
 	...
 </action>
+
+<goal>
+	...
+</goal>
+
+</approach>
+	...
+</approach>
 ```
+
+___
+
+Aggregator: https://openrouter.ai/
+
+Open AI Tokenizer: https://platform.openai.com/tokenizer
