@@ -402,8 +402,7 @@ int main(void) {
     printf("Key: `%s`, Value: `%s`\n", "surname", HashTableGetValueAtKey(&hashTable, "surname"));  
     printf("Key: `%s`, Value: `%s`\n", "asdlkfjsd;l", HashTableGetValueAtKey(&hashTable, "asdlkfjsd;l"));  
     printf("Removed key: %d\n", HashTableRemove(&hashTable, "surname"));  
-    printf("Removed key: %d\n", HashTableRemove(&hashTable, "random"));  
-  
+    printf("Removed key: %d\n", HashTableRemove(&hashTable, "random"));
   
     return 0;  
 }

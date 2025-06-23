@@ -7,3 +7,4 @@
 **cd** -> return to /root
 **cal** -> calendar
 **history** -> history of the latest executed commands
+cat/more -> read a file's contents

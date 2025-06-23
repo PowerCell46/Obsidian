@@ -282,15 +282,10 @@ Priродна география 2 въпроса 40 мин
 - Renew license: https://sales.jetbrains.com/hc/en-gb/articles/11564534574994-How-can-I-renew-my-free-educational-license-for-another-year
 
 ---
-Ако е юни можеш да върнеш на май без да даде грешка
 
-Защо при издаване на кредитни известия няма месидж при успех?
+
+
 https://bitwarden.com/
 
-plamenp@gea.uni-sofia.bg
-kristina_petrova@gea.uni-sofia.bg
-
-[https://arcg.is/0XbbCO0](https://arcg.is/0XbbCO0)
-[https://arcg.is/1mL95D2](https://arcg.is/1mL95D2)
 
 ![[Pasted image 20250621235138.png]]

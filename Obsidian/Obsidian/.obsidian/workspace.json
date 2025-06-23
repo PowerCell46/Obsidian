@@ -13,15 +13,72 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Vocabulary.md",
+                "file": "C/C Basics.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Vocabulary"
+              "title": "C Basics"
+            }
+          },
+          {
+            "id": "3cab23d3f29478fa",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "DevOps/GIT.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "GIT"
+            }
+          },
+          {
+            "id": "d224b5012f1b2af9",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "C/C Udemy.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "C Udemy"
+            }
+          },
+          {
+            "id": "bfdcae09bf18d6f5",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "ToDo.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "ToDo"
+            }
+          },
+          {
+            "id": "61c4b29b4e13a5bc",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Latona/Santa.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Santa"
             }
           }
-        ]
+        ],
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -104,7 +161,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Latona/Santa.md",
+                "file": "C/C Udemy.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -114,7 +171,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "Backlinks for Santa"
+              "title": "Backlinks for C Udemy"
             }
           },
           {
@@ -123,12 +180,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "DataScience/Pandas.md",
+                "file": "C/C Udemy.md",
                 "linksCollapsed": true,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "Outgoing links from Pandas"
+              "title": "Outgoing links from C Udemy"
             }
           },
           {
@@ -138,7 +195,9 @@
               "type": "tag",
               "state": {
                 "sortOrder": "frequency",
-                "useHierarchy": true
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
               },
               "icon": "lucide-tags",
               "title": "Tags"
@@ -150,19 +209,21 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Latona/Santa.md"
+                "file": "C/C Udemy.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Outline of Santa"
+              "title": "Outline of C Udemy"
             }
           }
         ],
-        "currentTab": 1
+        "currentTab": 3
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 300
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -177,9 +238,17 @@
       "companion:Toggle completion": false
     }
   },
-  "active": "da0429d559449f4e",
+  "active": "d224b5012f1b2af9",
   "lastOpenFiles": [
+    "Latona/Santa.md",
+    "ToDo.md",
+    "C/C Udemy.md",
+    "DevOps/GIT.md",
+    "C/C Basics.md",
+    "DevOps/Linux.md",
+    "Excalidraw/images/Pasted image 20250621235138.png",
     "University/СУ Изпитвания.md",
+    "Vocabulary.md",
     "Excalidraw/images/Drawing 2025-05-04 22.08.14.excalidraw.png",
     "Excalidraw/images/TroyanAndSmolyanComparison.png",
     "Excalidraw/images/Pasted Image 20250521124933_873.png",
@@ -189,18 +258,15 @@
     "Excalidraw/images/Pasted Image 20250521100424_126.png",
     "Excalidraw/images/Pasted image 20250506005432.png",
     "Excalidraw/images/Pasted Image 20250521130216_444.png",
-    "Excalidraw/images/Pasted Image 20250622114514_563.png",
     "Excalidraw/images",
     "Excalidraw/TroyanAndSmolyanComparison.md",
     "Excalidraw/Analysis And Interpretation Of Satellite Data.md",
     "Excalidraw/Obsidian And Excalidraw.md",
     "Excalidraw/Drawing 2025-05-04 15.34.35.excalidraw.md",
-    "ToDo.md",
     "University/ArcGis Pro.md",
     "University/ArcGis Pro Scripts.md",
     "University/University.md",
     "University/Биоразнообразие.md",
-    "DevOps/GIT.md",
     "DevOps/images",
     "AI/AI for Developers.md",
     "Latona/Santa SQL queries.md",
@@ -213,10 +279,6 @@
     "Latona/Energy Market.md",
     "University/Количествени и статистически методи.md",
     "University/Климатология Отговори.md",
-    "University/ГНСС.md",
-    "University/Геоморфология.md",
-    "University/ГЕОДИЗАЙН И  ЛАНДШАФТНО  ПЛАНИРАНЕ.md",
-    "University/География на населенията.md",
     "AI",
     "DataScience/AllPokemon.csv",
     "Excalidraw/Scripts/Downloaded",
